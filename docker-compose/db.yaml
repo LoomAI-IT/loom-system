@@ -1,0 +1,205 @@
+x-logging: &default-logging
+    driver: "json-file"
+    options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+    net:
+        name: net
+        driver: bridge
+
+services:
+    kontur-account-postgres:
+        image: postgres:latest
+        container_name: "${KONTUR_ACCOUNT_POSTGRES_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_ACCOUNT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+        ports:
+            - "${KONTUR_ACCOUNT_POSTGRES_PORT}:5432"
+        environment:
+            POSTGRES_DB: "${KONTUR_ACCOUNT_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${KONTUR_ACCOUNT_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${KONTUR_ACCOUNT_POSTGRES_PASSWORD}"
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-authorization-postgres:
+        image: postgres:latest
+        container_name: "${KONTUR_AUTHORIZATION_POSTGRES_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_AUTHORIZATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+        ports:
+            - "${KONTUR_AUTHORIZATION_POSTGRES_PORT}:5432"
+        environment:
+            POSTGRES_DB: "${KONTUR_AUTHORIZATION_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${KONTUR_AUTHORIZATION_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${KONTUR_AUTHORIZATION_POSTGRES_PASSWORD}"
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-employee-postgres:
+        image: postgres:latest
+        container_name: "${KONTUR_EMPLOYEE_POSTGRES_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_EMPLOYEE_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+        ports:
+            - "${KONTUR_EMPLOYEE_POSTGRES_PORT}:5432"
+        environment:
+            POSTGRES_DB: "${KONTUR_EMPLOYEE_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${KONTUR_EMPLOYEE_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${KONTUR_EMPLOYEE_POSTGRES_PASSWORD}"
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-organization-postgres:
+        image: postgres:latest
+        container_name: "${KONTUR_ORGANIZATION_POSTGRES_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_ORGANIZATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+        ports:
+            - "${KONTUR_ORGANIZATION_POSTGRES_PORT}:5432"
+        environment:
+            POSTGRES_DB: "${KONTUR_ORGANIZATION_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${KONTUR_ORGANIZATION_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${KONTUR_ORGANIZATION_POSTGRES_PASSWORD}"
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-publication-postgres:
+        image: postgres:latest
+        container_name: "${KONTUR_PUBLICATION_POSTGRES_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_PUBLICATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+        ports:
+            - "${KONTUR_PUBLICATION_POSTGRES_PORT}:5432"
+        environment:
+            POSTGRES_DB: "${KONTUR_PUBLICATION_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${KONTUR_PUBLICATION_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${KONTUR_PUBLICATION_POSTGRES_PASSWORD}"
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+
+    kontur-monitoring-redis:
+        image: redis:8.0.2
+        container_name: "${KONTUR_MONITORING_REDIS_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_MONITORING_REDIS_CONFIG_FILE}:/etc/redis/redis.conf"
+            - "../${KONTUR_MONITORING_REDIS_VOLUME_DIR}:/data"
+        ports:
+            - "${KONTUR_MONITORING_REDIS_PORT}:6379"
+        command: "redis-server /etc/redis/redis.conf"
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-loki:
+        image: grafana/loki:3.5.1
+        container_name: "${KONTUR_LOKI_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_LOKI_CONFIG_FILE}:/etc/loki/loki.yaml:ro"
+            - "../${KONTUR_LOKI_VOLUME_DIR}:/loki"
+        ports:
+            - "${KONTUR_LOKI_HTTP_PORT}:${KONTUR_LOKI_HTTP_PORT}"
+            - "${KONTUR_LOKI_GRPC_PORT}:${KONTUR_LOKI_GRPC_PORT}"
+        command: [ "-config.file=/etc/loki/loki.yaml" ]
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-tempo:
+        image: grafana/tempo:2.7.2
+        container_name: "${KONTUR_TEMPO_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_TEMPO_CONFIG_FILE}:/etc/tempo/tempo.yaml:ro"
+            - "../${KONTUR_TEMPO_VOLUME_DIR}:/var/tempo"
+        ports:
+            - "${KONTUR_TEMPO_HTTP_PORT}:${KONTUR_TEMPO_HTTP_PORT}"
+            - "${KONTUR_TEMPO_GRPC_PORT}:${KONTUR_TEMPO_GRPC_PORT}"
+            - "${KONTUR_TEMPO_OTLP_HTTP_PORT}:${KONTUR_TEMPO_OTLP_HTTP_PORT}"
+            - "${KONTUR_TEMPO_OTLP_GRPC_PORT}:${KONTUR_TEMPO_OTLP_GRPC_PORT}"
+        command: [ "-config.file=/etc/tempo/tempo.yaml" ]
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-victoria-metrics:
+        image: victoriametrics/victoria-metrics:v1.118.0
+        container_name: "${KONTUR_VICTORIA_METRICS_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_VICTORIA_METRICS_VOLUME_DIR}:/victoria-metrics-data"
+        ports:
+            - "${KONTUR_VICTORIA_METRICS_HTTP_PORT}:${KONTUR_VICTORIA_METRICS_HTTP_PORT}"
+        command:
+            - '-storageDataPath=/victoria-metrics-data'
+            - '-retentionPeriod=30d'
+            - '-httpListenAddr=:8428'
+            - '-memory.allowedPercent=80'
+            - '-search.maxUniqueTimeseries=1000000'
+            - '-search.maxQueryDuration=120s'
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-weed-master:
+        image: chrislusf/seaweedfs
+        logging: *default-logging
+        container_name: vtbaihr-weed-master
+        ports:
+            - "${KONTUR_WEED_MASTER_PORT}:${KONTUR_WEED_MASTER_PORT}"
+        command: "master"
+        networks:
+            - net
+
+    kontur-weed-volume:
+        image: chrislusf/seaweedfs:latest
+        container_name: vtbaihr-weed-volume
+        command: >
+            volume 
+            -mserver="${KONTUR_WEED_MASTER_CONTAINER_NAME}:${KONTUR_WEED_MASTER_PORT}" 
+            -ip.bind=0.0.0.0 
+            -port=8080 
+            -dir="/data"
+            -max=10
+            -metricsPort=9325
+            -dataCenter=dc1
+            -rack=rack2
+        volumes:
+            - "../${KONTUR_WEED_VOLUME_DIR}:/data"
+        depends_on:
+            - vtbaihr-weed-master
+        networks:
+            - net
+        restart: unless-stopped
+        logging: *default-logging
+
+    kontur-weed-filer:
+        image: chrislusf/seaweedfs:latest
+        container_name: vtbaihr-weed-filer
+        command: >
+            filer 
+            -master="${KONTUR_WEED_MASTER_CONTAINER_NAME}:${KONTUR_WEED_MASTER_PORT}"
+            -ip.bind=0.0.0.0 
+            -metricsPort=9327
+        depends_on:
+            - kontur-weed-master
+            - kontur-weed-volume
+        networks:
+            - net
+        restart: unless-stopped
+        logging: *default-logging

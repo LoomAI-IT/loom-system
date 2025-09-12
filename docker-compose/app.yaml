@@ -1,0 +1,80 @@
+networks:
+    net:
+        name: net
+        external: true  # Создается в docker-compose.db.yaml
+
+services:
+    kontur-account:
+        build:
+            context: "../../${KONTUR_ACCOUNT_CONTAINER_NAME}"
+            dockerfile: "${KONTUR_ACCOUNT_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${KONTUR_ACCOUNT_CONTAINER_NAME}"
+        env_file:
+            - "../env/${ENVIRONMENT}/.env.app"
+            - "../env/${ENVIRONMENT}/.env.db"
+            - "../env/${ENVIRONMENT}/.env.monitoring"
+        ports:
+            - "${KONTUR_ACCOUNT_PORT}:${KONTUR_ACCOUNT_PORT}"
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-authorization:
+        build:
+            context: "../../${KONTUR_AUTHORIZATION_CONTAINER_NAME}"
+            dockerfile: "${KONTUR_AUTHORIZATION_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${KONTUR_AUTHORIZATION_CONTAINER_NAME}"
+        env_file:
+            - "../env/${ENVIRONMENT}/.env.app"
+            - "../env/${ENVIRONMENT}/.env.db"
+            - "../env/${ENVIRONMENT}/.env.monitoring"
+        ports:
+            - "${KONTUR_AUTHORIZATION_PORT}:${KONTUR_AUTHORIZATION_PORT}"
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-employee:
+        build:
+            context: "../../${KONTUR_EMPLOYEE_CONTAINER_NAME}"
+            dockerfile: "${KONTUR_EMPLOYEE_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${KONTUR_EMPLOYEE_CONTAINER_NAME}"
+        env_file:
+            - "../env/${ENVIRONMENT}/.env.app"
+            - "../env/${ENVIRONMENT}/.env.db"
+            - "../env/${ENVIRONMENT}/.env.monitoring"
+        ports:
+            - "${KONTUR_EMPLOYEE_PORT}:${KONTUR_EMPLOYEE_PORT}"
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-organization:
+        build:
+            context: "../../${KONTUR_ORGANIZATION_CONTAINER_NAME}"
+            dockerfile: "${KONTUR_ORGANIZATION_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${KONTUR_ORGANIZATION_CONTAINER_NAME}"
+        env_file:
+            - "../env/${ENVIRONMENT}/.env.app"
+            - "../env/${ENVIRONMENT}/.env.db"
+            - "../env/${ENVIRONMENT}/.env.monitoring"
+        ports:
+            - "${KONTUR_ORGANIZATION_PORT}:${KONTUR_ORGANIZATION_PORT}"
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-publication:
+        build:
+            context: "../../${KONTUR_PUBLICATION_CONTAINER_NAME}"
+            dockerfile: "${KONTUR_PUBLICATION_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${KONTUR_PUBLICATION_CONTAINER_NAME}"
+        env_file:
+            - "../env/${ENVIRONMENT}/.env.app"
+            - "../env/${ENVIRONMENT}/.env.db"
+            - "../env/${ENVIRONMENT}/.env.monitoring"
+        ports:
+            - "${KONTUR_PUBLICATION_PORT}:${KONTUR_PUBLICATION_PORT}"
+        restart: unless-stopped
+        networks:
+            - net

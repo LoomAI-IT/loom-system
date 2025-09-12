@@ -1,0 +1,76 @@
+.PHONY: deploy build-all stop-all update-all rebuild-all
+.PHONY: rebuild-app stop-app
+.PHONY: rebuild-monitoring stop-monitoring
+.PHONY: rebuild-db stop-db
+.PHONY: set-dev-env set-prod-env set-env-to-config-template
+
+set-dev-env:
+	@export $(cat env/dev/.env.app env/dev/.env.db env/dev/.env.monitoring | xargs)
+
+set-prod-env:
+	@export $(cat env/prod/.env env/prod/.env.app env/prod/.env.db env/prod/.env.monitoring | xargs)
+
+set-env-to-config-template:
+	@envsubst < ${KONTUR_LOKI_CONFIG_FILE}.template > ${KONTUR_LOKI_CONFIG_FILE}
+	@envsubst < ${KONTUR_MONITORING_REDIS_CONFIG_FILE}.template > ${KONTUR_MONITORING_REDIS_CONFIG_FILE}
+	@envsubst < ${KONTUR_TEMPO_CONFIG_FILE}.template > ${KONTUR_TEMPO_CONFIG_FILE}
+	@envsubst < ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}.template > ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}
+
+deploy:
+	@cd ..
+	@git@github.com:KonturAI/kontur-account.git
+	@git@github.com:KonturAI/kontur-authorization.git
+	@git@github.com:KonturAI/kontur-employee.git
+	@git@github.com:KonturAI/kontur-organization.git
+	@git@github.com:KonturAI/kontur-publication.git
+	@cd kontur-system
+	@./infrastructure/nginx/install.sh
+	@./infrastructure/docker/install.sh
+	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics}
+	@mkdir -p volumes/redis/monitoring
+	@mkdir -p volumes/weed
+	@mkdir -p volumes/postgresql/{account, authorization, employee, organization, publication, grafana}
+	@chmod -R 777 volumes
+
+build-all: set-env-to-config-template
+	@docker compose -f ./docker-compose/db.yaml up -d --build
+	sleep 20
+	@docker compose -f ./docker-compose/monitoring.yaml up -d --build
+	sleep 20
+	@docker compose -f ./docker-compose/app.yaml up -d --build
+
+
+stop-all:
+	@docker compose -f ./docker-compose/apps.yaml down
+	@docker compose -f ./docker-compose/monitoring.yaml down
+	@docker compose -f ./docker-compose/db.yaml down
+
+update-all:
+	@git pull
+	@cd ../kontur-account/ && git pull && cd ../kontur-system/
+	@cd ../kontur-authorization/ && git pull && cd ../kontur-system/
+	@cd ../kontur-employee/ && git pull && cd ../kontur-system/
+	@cd ../kontur-organization/ && git pull && cd ../kontur-system/
+	@cd ../kontur-publication/ && git pull && cd ../kontur-system/
+
+rebuild-all: update-all build-all
+
+rebuild-app: update-all set-env-to-config-template
+	@docker compose -f ./docker-compose/apps.yaml up -d --build
+
+stop-app:
+	@docker compose -f ./docker-compose/apps.yaml down
+
+stop-monitoring:
+	@docker compose -f ./docker-compose/monitoring.yaml down
+
+stop-db:
+	@docker compose -f ./docker-compose/db.yaml down
+
+rebuild-monitoring: update-all set-env-to-config-template
+	@docker compose -f ./docker-compose/monitoring.yaml down
+	@docker compose -f ./docker-compose/monitoring.yaml up -d --build
+
+rebuild-db: update-all set-env-to-config-template
+	@docker compose -f ./docker-compose/db.yaml down
+	@docker compose -f ./docker-compose/db.yaml up -d --build
