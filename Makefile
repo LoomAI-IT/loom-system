@@ -18,11 +18,11 @@ set-env-to-config-template:
 
 deploy:
 	@cd ..
-	@git@github.com:KonturAI/kontur-account.git
-	@git@github.com:KonturAI/kontur-authorization.git
-	@git@github.com:KonturAI/kontur-employee.git
-	@git@github.com:KonturAI/kontur-organization.git
-	@git@github.com:KonturAI/kontur-publication.git
+	@git clone git@github.com:KonturAI/kontur-account.git
+	@git clone git@github.com:KonturAI/kontur-authorization.git
+	@git clone git@github.com:KonturAI/kontur-employee.git
+	@git clone git@github.com:KonturAI/kontur-organization.git
+	@git clone git@github.com:KonturAI/kontur-publication.git
 	@cd kontur-system
 	@./infrastructure/nginx/install.sh
 	@./infrastructure/docker/install.sh
@@ -33,7 +33,7 @@ deploy:
 	@chmod -R 777 volumes
 
 build-all: set-env-to-config-template
-	@docker compose -f ./docker-compose/db.yaml up -d --build
+	@docker compose -f ./docker-compose/db.yaml up --build
 	sleep 20
 	@docker compose -f ./docker-compose/monitoring.yaml up -d --build
 	sleep 20

@@ -182,7 +182,7 @@ services:
         volumes:
             - "../${KONTUR_WEED_VOLUME_DIR}:/data"
         depends_on:
-            - vtbaihr-weed-master
+            - kontur-weed-master
         networks:
             - net
         restart: unless-stopped
