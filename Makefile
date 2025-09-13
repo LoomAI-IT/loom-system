@@ -35,7 +35,7 @@ deploy:
 build-all: set-env-to-config-template
 	@docker compose -f ./docker-compose/db.yaml up --build
 	sleep 20
-	@docker compose -f ./docker-compose/monitoring.yaml up -d --build
+	@docker compose -f ./docker-compose/monitoring.yaml up --build
 	sleep 20
 	@docker compose -f ./docker-compose/app.yaml up -d --build
 

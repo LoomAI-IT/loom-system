@@ -23,23 +23,6 @@ services:
         networks:
             - net
 
-    kontur-postgres-exporter-vacancy:
-        image: quay.io/prometheuscommunity/postgres-exporter:latest
-        container_name: "${KONTUR_VACANCY_POSTGRES_EXPORTER_CONTAINER_NAME}"
-        ports:
-            - "${KONTUR_VACANCY_POSTGRES_EXPORTER_PORT}:9187"
-        environment:
-            DATA_SOURCE_URI: "${KONTUR_VACANCY_POSTGRES_CONTAINER_NAME}:5432/postgres?sslmode=disable"
-            DATA_SOURCE_USER: "${KONTUR_VACANCY_POSTGRES_USER}"
-            DATA_SOURCE_PASS: "${KONTUR_VACANCY_POSTGRES_PASSWORD}"
-            PG_EXPORTER_DISABLE_SETTINGS_METRICS: "false"
-            PG_EXPORTER_AUTO_DISCOVER_DATABASES: "true"
-            PG_EXPORTER_EXCLUDE_DATABASES: "template0,template1"
-        logging: *default-logging
-        restart: unless-stopped
-        networks:
-            - net
-
 
     kontur-otel-collector:
         image: otel/opentelemetry-collector-contrib:latest
