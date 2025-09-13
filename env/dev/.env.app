@@ -1,6 +1,7 @@
 
 KONTUR_PASSWORD_SECRET_KEY=ewnfiower32r54twef
 KONTUR_JWT_SECRET_KEY=ewnfiower32r54tfwefregregfdbdfwef
+KONTUR_INTERSERVER_SECRET_KEY=ewnfiower32r53297523baslkeftfwefregregfdbdfwef
 
 KONTUR_ACCOUNT_CONTAINER_NAME=kontur-account
 KONTUR_ACCOUNT_PORT=8000
