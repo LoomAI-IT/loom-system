@@ -37,7 +37,7 @@ build-all: set-env-to-config-template
 	sleep 20
 	@docker compose -f ./docker-compose/monitoring.yaml up --build
 	sleep 20
-	@docker compose -f ./docker-compose/app.yaml up -d --build
+	@docker compose -f ./docker-compose/app.yaml up --build
 
 
 stop-all:
