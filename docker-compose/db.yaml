@@ -25,7 +25,7 @@ services:
         restart: unless-stopped
         networks:
             - net
-            -
+
     kontur-account-postgres:
         image: postgres:latest
         container_name: "${KONTUR_ACCOUNT_POSTGRES_CONTAINER_NAME}"
