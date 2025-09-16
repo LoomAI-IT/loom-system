@@ -18,6 +18,7 @@ set-env-to-config-template:
 
 deploy:
 	@cd ..
+	@git clone git@github.com:KonturAI/kontur-tg-bot.git
 	@git clone git@github.com:KonturAI/kontur-account.git
 	@git clone git@github.com:KonturAI/kontur-authorization.git
 	@git clone git@github.com:KonturAI/kontur-employee.git
@@ -29,7 +30,7 @@ deploy:
 	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics}
 	@mkdir -p volumes/redis/monitoring
 	@mkdir -p volumes/weed
-	@mkdir -p volumes/postgresql/{account, authorization, employee, organization, publication, grafana}
+	@mkdir -p volumes/postgresql/{tg-bot, account, authorization, employee, organization, publication, grafana}
 	@chmod -R 777 volumes
 
 build-all: set-env-to-config-template
@@ -47,6 +48,7 @@ stop-all:
 
 update-all:
 	@git pull
+	@cd ../kontur-tg-bot/ && git pull && cd ../kontur-system/
 	@cd ../kontur-account/ && git pull && cd ../kontur-system/
 	@cd ../kontur-authorization/ && git pull && cd ../kontur-system/
 	@cd ../kontur-employee/ && git pull && cd ../kontur-system/

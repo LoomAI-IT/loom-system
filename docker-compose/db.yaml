@@ -10,6 +10,22 @@ networks:
         driver: bridge
 
 services:
+    kontur-tg-bot-postgres:
+        image: postgres:latest
+        container_name: "${KONTUR_TG_BOT_POSTGRES_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_TG_BOT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+        ports:
+            - "${KONTUR_TG_BOT_POSTGRES_PORT}:5432"
+        environment:
+            POSTGRES_DB: "${KONTUR_TG_BOT_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${KONTUR_TG_BOT_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${KONTUR_TG_BOT_POSTGRES_PASSWORD}"
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+            -
     kontur-account-postgres:
         image: postgres:latest
         container_name: "${KONTUR_ACCOUNT_POSTGRES_CONTAINER_NAME}"

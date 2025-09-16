@@ -4,6 +4,21 @@ networks:
         external: true  # Создается в docker-compose.db.yaml
 
 services:
+    kontur-tg-bot:
+        build:
+            context: "../../${KONTUR_TG_BOT_CONTAINER_NAME}"
+            dockerfile: "${KONTUR_TG_BOT_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${KONTUR_TG_BOT_CONTAINER_NAME}"
+        env_file:
+            - "../env/${ENVIRONMENT}/.env.app"
+            - "../env/${ENVIRONMENT}/.env.db"
+            - "../env/${ENVIRONMENT}/.env.monitoring"
+        ports:
+            - "${KONTUR_TG_BOT_PORT}:${KONTUR_TG_BOT_PORT}"
+        restart: unless-stopped
+        networks:
+            - net
+
     kontur-account:
         build:
             context: "../../${KONTUR_ACCOUNT_CONTAINER_NAME}"

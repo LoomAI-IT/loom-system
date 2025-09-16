@@ -21,11 +21,15 @@ http {
     gzip on;
 
     server {
-        server_name konturai.ru;
+        server_name kontur-media.ru;
         listen 80;
 
         location / {
             proxy_pass http://127.0.0.1:3000;
+        }
+
+        location /api/tg-bot {
+            proxy_pass http://127.0.0.1:8005;
         }
 
         location /api/account {
