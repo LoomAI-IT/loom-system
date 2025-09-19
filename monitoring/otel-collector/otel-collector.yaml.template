@@ -29,7 +29,7 @@ receivers:
                                 - '$KONTUR_AUTHORIZATION_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
                                 - '$KONTUR_EMPLOYEE_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
                                 - '$KONTUR_ORGANIZATION_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
-                                - '$KONTUR_PUBLICATION_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
+                                - '$KONTUR_CONTENT_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
 
                     relabel_configs:
                         -   source_labels: [ __address__ ]

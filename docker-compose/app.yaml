@@ -79,17 +79,17 @@ services:
         networks:
             - net
 
-    kontur-publication:
+    kontur-content:
         build:
-            context: "../../${KONTUR_PUBLICATION_CONTAINER_NAME}"
-            dockerfile: "${KONTUR_PUBLICATION_DOCKERFILE_DIR}/Dockerfile"
-        container_name: "${KONTUR_PUBLICATION_CONTAINER_NAME}"
+            context: "../../${KONTUR_CONTENT_CONTAINER_NAME}"
+            dockerfile: "${KONTUR_CONTENT_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${KONTUR_CONTENT_CONTAINER_NAME}"
         env_file:
             - "../env/${ENVIRONMENT}/.env.app"
             - "../env/${ENVIRONMENT}/.env.db"
             - "../env/${ENVIRONMENT}/.env.monitoring"
         ports:
-            - "${KONTUR_PUBLICATION_PORT}:${KONTUR_PUBLICATION_PORT}"
+            - "${KONTUR_CONTENT_PORT}:${KONTUR_CONTENT_PORT}"
         restart: unless-stopped
         networks:
             - net

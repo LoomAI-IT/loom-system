@@ -90,17 +90,17 @@ services:
         networks:
             - net
 
-    kontur-publication-postgres:
+    kontur-content-postgres:
         image: postgres:latest
-        container_name: "${KONTUR_PUBLICATION_POSTGRES_CONTAINER_NAME}"
+        container_name: "${KONTUR_CONTENT_POSTGRES_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_PUBLICATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+            - "../${KONTUR_CONTENT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
         ports:
-            - "${KONTUR_PUBLICATION_POSTGRES_PORT}:5432"
+            - "${KONTUR_CONTENT_POSTGRES_PORT}:5432"
         environment:
-            POSTGRES_DB: "${KONTUR_PUBLICATION_POSTGRES_DB_NAME}"
-            POSTGRES_USER: "${KONTUR_PUBLICATION_POSTGRES_USER}"
-            POSTGRES_PASSWORD: "${KONTUR_PUBLICATION_POSTGRES_PASSWORD}"
+            POSTGRES_DB: "${KONTUR_CONTENT_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${KONTUR_CONTENT_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${KONTUR_CONTENT_POSTGRES_PASSWORD}"
         logging: *default-logging
         restart: unless-stopped
         networks:
