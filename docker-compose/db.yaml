@@ -22,7 +22,7 @@ services:
         volumes:
             - "../${KONTUR_TG_BOT_API_VOLUME_DIR}:/var/lib/telegram-bot-api"
         ports:
-            - "${KONTUR_TG_BOT_API_PORT_NAME}:${KONTUR_TG_BOT_API_PORT_NAME}"
+            - "${KONTUR_TG_BOT_API_PORT}:${KONTUR_TG_BOT_API_PORT}"
             - "8082:8082"
 
     kontur-tg-bot-postgres:
