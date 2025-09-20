@@ -27,7 +27,7 @@ deploy:
 	@cd kontur-system
 	@./infrastructure/nginx/install.sh
 	@./infrastructure/docker/install.sh
-	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics}
+	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics,tg-bot-api}
 	@mkdir -p volumes/redis/monitoring
 	@mkdir -p volumes/weed
 	@mkdir -p volumes/postgresql/{tg-bot,account,authorization,employee,organization,content,grafana}
