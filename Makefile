@@ -2,7 +2,7 @@
 .PHONY: rebuild-app stop-app
 .PHONY: rebuild-monitoring stop-monitoring
 .PHONY: rebuild-db stop-db
-.PHONY: set-dev-env set-prod-env set-env-to-config-template
+.PHONY: set-env set-env-to-config-template
 
 set-env:
 	@export $(cat env/.env.app env/.env.db env/.env.monitoring | xargs)
