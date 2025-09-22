@@ -3,7 +3,7 @@
 apt install nginx -y
 
 export $(grep -v '^#' .env | xargs)
-envsubst < infrastructure/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+cp infrastructure/nginx/nginx.conf > /etc/nginx/nginx.conf
 
 systemctl restart nginx
 apt install snapd

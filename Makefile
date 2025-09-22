@@ -16,7 +16,7 @@ set-env-to-config-template:
 
 deploy:
     @apt update && apt upgrade
-    @apt install python3-pip
+    @apt install python3-pip git
     @pip install requests
 	@cd ..
 	@git clone git@github.com:KonturAI/kontur-tg-bot.git
