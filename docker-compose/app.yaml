@@ -10,9 +10,9 @@ services:
             dockerfile: "${KONTUR_TG_BOT_DOCKERFILE_DIR}/Dockerfile"
         container_name: "${KONTUR_TG_BOT_CONTAINER_NAME}"
         env_file:
-            - "../env/${ENVIRONMENT}/.env.app"
-            - "../env/${ENVIRONMENT}/.env.db"
-            - "../env/${ENVIRONMENT}/.env.monitoring"
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
         ports:
             - "${KONTUR_TG_BOT_PORT}:${KONTUR_TG_BOT_PORT}"
         restart: unless-stopped
@@ -25,9 +25,9 @@ services:
             dockerfile: "${KONTUR_ACCOUNT_DOCKERFILE_DIR}/Dockerfile"
         container_name: "${KONTUR_ACCOUNT_CONTAINER_NAME}"
         env_file:
-            - "../env/${ENVIRONMENT}/.env.app"
-            - "../env/${ENVIRONMENT}/.env.db"
-            - "../env/${ENVIRONMENT}/.env.monitoring"
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
         ports:
             - "${KONTUR_ACCOUNT_PORT}:${KONTUR_ACCOUNT_PORT}"
         restart: unless-stopped
@@ -40,9 +40,9 @@ services:
             dockerfile: "${KONTUR_AUTHORIZATION_DOCKERFILE_DIR}/Dockerfile"
         container_name: "${KONTUR_AUTHORIZATION_CONTAINER_NAME}"
         env_file:
-            - "../env/${ENVIRONMENT}/.env.app"
-            - "../env/${ENVIRONMENT}/.env.db"
-            - "../env/${ENVIRONMENT}/.env.monitoring"
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
         ports:
             - "${KONTUR_AUTHORIZATION_PORT}:${KONTUR_AUTHORIZATION_PORT}"
         restart: unless-stopped
