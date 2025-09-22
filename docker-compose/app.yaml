@@ -55,9 +55,9 @@ services:
             dockerfile: "${KONTUR_EMPLOYEE_DOCKERFILE_DIR}/Dockerfile"
         container_name: "${KONTUR_EMPLOYEE_CONTAINER_NAME}"
         env_file:
-            - "../env/${ENVIRONMENT}/.env.app"
-            - "../env/${ENVIRONMENT}/.env.db"
-            - "../env/${ENVIRONMENT}/.env.monitoring"
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
         ports:
             - "${KONTUR_EMPLOYEE_PORT}:${KONTUR_EMPLOYEE_PORT}"
         restart: unless-stopped
@@ -70,9 +70,9 @@ services:
             dockerfile: "${KONTUR_ORGANIZATION_DOCKERFILE_DIR}/Dockerfile"
         container_name: "${KONTUR_ORGANIZATION_CONTAINER_NAME}"
         env_file:
-            - "../env/${ENVIRONMENT}/.env.app"
-            - "../env/${ENVIRONMENT}/.env.db"
-            - "../env/${ENVIRONMENT}/.env.monitoring"
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
         ports:
             - "${KONTUR_ORGANIZATION_PORT}:${KONTUR_ORGANIZATION_PORT}"
         restart: unless-stopped
@@ -85,9 +85,9 @@ services:
             dockerfile: "${KONTUR_CONTENT_DOCKERFILE_DIR}/Dockerfile"
         container_name: "${KONTUR_CONTENT_CONTAINER_NAME}"
         env_file:
-            - "../env/${ENVIRONMENT}/.env.app"
-            - "../env/${ENVIRONMENT}/.env.db"
-            - "../env/${ENVIRONMENT}/.env.monitoring"
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
         ports:
             - "${KONTUR_CONTENT_PORT}:${KONTUR_CONTENT_PORT}"
         restart: unless-stopped
