@@ -4,11 +4,9 @@
 .PHONY: rebuild-db stop-db
 .PHONY: set-dev-env set-prod-env set-env-to-config-template
 
-set-dev-env:
-	@export $(cat env/dev/.env.app env/dev/.env.db env/dev/.env.monitoring | xargs)
+set-env:
+	@export $(cat env/.env.app env/.env.db env/.env.monitoring | xargs)
 
-set-prod-env:
-	@export $(cat env/prod/.env env/prod/.env.app env/prod/.env.db env/prod/.env.monitoring | xargs)
 
 set-env-to-config-template:
 	@envsubst < ${KONTUR_LOKI_CONFIG_FILE}.template > ${KONTUR_LOKI_CONFIG_FILE}
@@ -17,6 +15,9 @@ set-env-to-config-template:
 	@envsubst < ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}.template > ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}
 
 deploy:
+    @apt update && apt upgrade
+    @apt install python3-pip
+    @pip install requests
 	@cd ..
 	@git clone git@github.com:KonturAI/kontur-tg-bot.git
 	@git clone git@github.com:KonturAI/kontur-account.git
