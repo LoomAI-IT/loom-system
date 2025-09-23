@@ -14,9 +14,9 @@ set-env-to-config-template:
 	@envsubst < ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}.template > ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}
 
 deploy:
-    @apt update && apt upgrade
-    @apt install python3-pip git
-    @pip install requests
+	@apt update && apt upgrade
+	@apt install python3-pip git
+	@pip install requests
 	@cd ..
 	@git clone git@github.com:KonturAI/kontur-tg-bot.git
 	@git clone git@github.com:KonturAI/kontur-account.git
