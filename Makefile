@@ -7,7 +7,6 @@
 set-env:
 	@export $(cat env/.env.app env/.env.db env/.env.monitoring | xargs)
 
-
 set-env-to-config-template:
 	@envsubst < ${KONTUR_LOKI_CONFIG_FILE}.template > ${KONTUR_LOKI_CONFIG_FILE}
 	@envsubst < ${KONTUR_MONITORING_REDIS_CONFIG_FILE}.template > ${KONTUR_MONITORING_REDIS_CONFIG_FILE}
