@@ -1,6 +1,6 @@
 server:
-  http_listen_port: $KONTUR_TEMPO_HTTP_PORT
-  grpc_listen_port: $KONTUR_TEMPO_GRPC_PORT
+  http_listen_port: $LOOM_TEMPO_HTTP_PORT
+  grpc_listen_port: $LOOM_TEMPO_GRPC_PORT
   log_level: info
 
 distributor:
@@ -8,9 +8,9 @@ distributor:
     otlp:
       protocols:
         grpc:
-          endpoint: 0.0.0.0:$KONTUR_TEMPO_OTLP_GRPC_PORT
+          endpoint: 0.0.0.0:$LOOM_TEMPO_OTLP_GRPC_PORT
         http:
-          endpoint: 0.0.0.0:$KONTUR_TEMPO_OTLP_HTTP_PORT
+          endpoint: 0.0.0.0:$LOOM_TEMPO_OTLP_HTTP_PORT
 
 ingester:
   max_block_duration: 5m
@@ -40,7 +40,7 @@ metrics_generator:
   storage:
     path: /var/tempo/generator/wal
     remote_write:
-      - url: http://$KONTUR_VICTORIA_METRICS_CONTAINER_NAME:$KONTUR_VICTORIA_METRICS_HTTP_PORT/api/v1/write
+      - url: http://$LOOM_VICTORIA_METRICS_CONTAINER_NAME:$LOOM_VICTORIA_METRICS_HTTP_PORT/api/v1/write
         send_exemplars: true
         headers:
           X-Scope-OrgID: docker-compose

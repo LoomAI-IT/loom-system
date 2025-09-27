@@ -6,8 +6,8 @@ import json
 
 
 def send_telegram_message(text):
-    bot_token = os.getenv('KONTUR_ALERT_TG_BOT_TOKEN')
-    tg_chat_id = os.getenv('KONTUR_ALERT_TG_CHAT_ID')
+    bot_token = os.getenv('LOOM_ALERT_TG_BOT_TOKEN')
+    tg_chat_id = os.getenv('LOOM_ALERT_TG_CHAT_ID')
 
     # Проверяем наличие необходимых переменных
     if not bot_token:

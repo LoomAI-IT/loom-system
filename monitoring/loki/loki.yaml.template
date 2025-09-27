@@ -1,8 +1,8 @@
 auth_enabled: false
 
 server:
-    http_listen_port: $KONTUR_LOKI_HTTP_PORT
-    grpc_listen_port: $KONTUR_LOKI_GRPC_PORT
+    http_listen_port: $LOOM_LOKI_HTTP_PORT
+    grpc_listen_port: $LOOM_LOKI_GRPC_PORT
 
 common:
     instance_addr: 127.0.0.1

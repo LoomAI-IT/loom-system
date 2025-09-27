@@ -4,7 +4,7 @@ datasources:
     -   name: VictoriaMetrics
         type: prometheus
         access: proxy
-        url: http://kontur-victoria-metrics:8428
+        url: http://loom-victoria-metrics:8428
         uid: victoria-metrics
         isDefault: true
         editable: true
@@ -16,7 +16,7 @@ datasources:
     -   name: Tempo
         type: tempo
         access: proxy
-        url: http://kontur-tempo:3200
+        url: http://loom-tempo:3200
         uid: tempo
         editable: true
         jsonData:
@@ -31,5 +31,5 @@ datasources:
 
     -   name: Loki
         type: loki
-        url: http://kontur-loki:3100
+        url: http://loom-loki:3100
         uid: loki

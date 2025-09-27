@@ -10,117 +10,117 @@ networks:
         driver: bridge
 
 services:
-    kontur-tg-bot-api:
+    loom-tg-bot-api:
         image: aiogram/telegram-bot-api:latest
-        container_name: "${KONTUR_TG_BOT_API_CONTAINER_NAME}"
+        container_name: "${LOOM_TG_BOT_API_CONTAINER_NAME}"
         restart: unless-stopped
         environment:
-            TELEGRAM_API_ID: "${KONTUR_TG_API_ID}"
-            TELEGRAM_API_HASH: "${KONTUR_TG_API_HASH}"
+            TELEGRAM_API_ID: "${LOOM_TG_API_ID}"
+            TELEGRAM_API_HASH: "${LOOM_TG_API_HASH}"
             TELEGRAM_LOCAL: "1"
             TELEGRAM_STAT: "1"
         volumes:
-            - "../${KONTUR_TG_BOT_API_VOLUME_DIR}:/var/lib/telegram-bot-api"
+            - "../${LOOM_TG_BOT_API_VOLUME_DIR}:/var/lib/telegram-bot-api"
         ports:
-            - "${KONTUR_TG_BOT_API_PORT}:${KONTUR_TG_BOT_API_PORT}"
+            - "${LOOM_TG_BOT_API_PORT}:${LOOM_TG_BOT_API_PORT}"
             - "8082:8082"
 
-    kontur-tg-bot-postgres:
+    loom-tg-bot-postgres:
         image: postgres:17.6
-        container_name: "${KONTUR_TG_BOT_POSTGRES_CONTAINER_NAME}"
+        container_name: "${LOOM_TG_BOT_POSTGRES_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_TG_BOT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+            - "../${LOOM_TG_BOT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
         ports:
-            - "${KONTUR_TG_BOT_POSTGRES_PORT}:5432"
+            - "${LOOM_TG_BOT_POSTGRES_PORT}:5432"
         environment:
-            POSTGRES_DB: "${KONTUR_TG_BOT_POSTGRES_DB_NAME}"
-            POSTGRES_USER: "${KONTUR_TG_BOT_POSTGRES_USER}"
-            POSTGRES_PASSWORD: "${KONTUR_TG_BOT_POSTGRES_PASSWORD}"
+            POSTGRES_DB: "${LOOM_TG_BOT_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${LOOM_TG_BOT_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${LOOM_TG_BOT_POSTGRES_PASSWORD}"
             PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
             - net
 
-    kontur-account-postgres:
+    loom-account-postgres:
         image: postgres:17.6
-        container_name: "${KONTUR_ACCOUNT_POSTGRES_CONTAINER_NAME}"
+        container_name: "${LOOM_ACCOUNT_POSTGRES_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_ACCOUNT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+            - "../${LOOM_ACCOUNT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
         ports:
-            - "${KONTUR_ACCOUNT_POSTGRES_PORT}:5432"
+            - "${LOOM_ACCOUNT_POSTGRES_PORT}:5432"
         environment:
-            POSTGRES_DB: "${KONTUR_ACCOUNT_POSTGRES_DB_NAME}"
-            POSTGRES_USER: "${KONTUR_ACCOUNT_POSTGRES_USER}"
-            POSTGRES_PASSWORD: "${KONTUR_ACCOUNT_POSTGRES_PASSWORD}"
+            POSTGRES_DB: "${LOOM_ACCOUNT_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${LOOM_ACCOUNT_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${LOOM_ACCOUNT_POSTGRES_PASSWORD}"
             PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
             - net
 
-    kontur-authorization-postgres:
+    loom-authorization-postgres:
         image: postgres:17.6
-        container_name: "${KONTUR_AUTHORIZATION_POSTGRES_CONTAINER_NAME}"
+        container_name: "${LOOM_AUTHORIZATION_POSTGRES_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_AUTHORIZATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+            - "../${LOOM_AUTHORIZATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
         ports:
-            - "${KONTUR_AUTHORIZATION_POSTGRES_PORT}:5432"
+            - "${LOOM_AUTHORIZATION_POSTGRES_PORT}:5432"
         environment:
-            POSTGRES_DB: "${KONTUR_AUTHORIZATION_POSTGRES_DB_NAME}"
-            POSTGRES_USER: "${KONTUR_AUTHORIZATION_POSTGRES_USER}"
-            POSTGRES_PASSWORD: "${KONTUR_AUTHORIZATION_POSTGRES_PASSWORD}"
+            POSTGRES_DB: "${LOOM_AUTHORIZATION_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${LOOM_AUTHORIZATION_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${LOOM_AUTHORIZATION_POSTGRES_PASSWORD}"
             PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
             - net
 
-    kontur-employee-postgres:
+    loom-employee-postgres:
         image: postgres:17.6
-        container_name: "${KONTUR_EMPLOYEE_POSTGRES_CONTAINER_NAME}"
+        container_name: "${LOOM_EMPLOYEE_POSTGRES_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_EMPLOYEE_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+            - "../${LOOM_EMPLOYEE_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
         ports:
-            - "${KONTUR_EMPLOYEE_POSTGRES_PORT}:5432"
+            - "${LOOM_EMPLOYEE_POSTGRES_PORT}:5432"
         environment:
-            POSTGRES_DB: "${KONTUR_EMPLOYEE_POSTGRES_DB_NAME}"
-            POSTGRES_USER: "${KONTUR_EMPLOYEE_POSTGRES_USER}"
-            POSTGRES_PASSWORD: "${KONTUR_EMPLOYEE_POSTGRES_PASSWORD}"
+            POSTGRES_DB: "${LOOM_EMPLOYEE_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${LOOM_EMPLOYEE_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${LOOM_EMPLOYEE_POSTGRES_PASSWORD}"
             PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
             - net
 
-    kontur-organization-postgres:
+    loom-organization-postgres:
         image: postgres:17.6
-        container_name: "${KONTUR_ORGANIZATION_POSTGRES_CONTAINER_NAME}"
+        container_name: "${LOOM_ORGANIZATION_POSTGRES_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_ORGANIZATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+            - "../${LOOM_ORGANIZATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
         ports:
-            - "${KONTUR_ORGANIZATION_POSTGRES_PORT}:5432"
+            - "${LOOM_ORGANIZATION_POSTGRES_PORT}:5432"
         environment:
-            POSTGRES_DB: "${KONTUR_ORGANIZATION_POSTGRES_DB_NAME}"
-            POSTGRES_USER: "${KONTUR_ORGANIZATION_POSTGRES_USER}"
-            POSTGRES_PASSWORD: "${KONTUR_ORGANIZATION_POSTGRES_PASSWORD}"
+            POSTGRES_DB: "${LOOM_ORGANIZATION_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${LOOM_ORGANIZATION_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${LOOM_ORGANIZATION_POSTGRES_PASSWORD}"
             PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
             - net
 
-    kontur-content-postgres:
+    loom-content-postgres:
         image: postgres:17.6
-        container_name: "${KONTUR_CONTENT_POSTGRES_CONTAINER_NAME}"
+        container_name: "${LOOM_CONTENT_POSTGRES_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_CONTENT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+            - "../${LOOM_CONTENT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
         ports:
-            - "${KONTUR_CONTENT_POSTGRES_PORT}:5432"
+            - "${LOOM_CONTENT_POSTGRES_PORT}:5432"
         environment:
-            POSTGRES_DB: "${KONTUR_CONTENT_POSTGRES_DB_NAME}"
-            POSTGRES_USER: "${KONTUR_CONTENT_POSTGRES_USER}"
-            POSTGRES_PASSWORD: "${KONTUR_CONTENT_POSTGRES_PASSWORD}"
+            POSTGRES_DB: "${LOOM_CONTENT_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${LOOM_CONTENT_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${LOOM_CONTENT_POSTGRES_PASSWORD}"
             PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
@@ -128,59 +128,59 @@ services:
             - net
 
 
-    kontur-monitoring-redis:
+    loom-monitoring-redis:
         image: redis:8.0.2
-        container_name: "${KONTUR_MONITORING_REDIS_CONTAINER_NAME}"
+        container_name: "${LOOM_MONITORING_REDIS_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_MONITORING_REDIS_CONFIG_FILE}:/etc/redis/redis.conf"
-            - "../${KONTUR_MONITORING_REDIS_VOLUME_DIR}:/data"
+            - "../${LOOM_MONITORING_REDIS_CONFIG_FILE}:/etc/redis/redis.conf"
+            - "../${LOOM_MONITORING_REDIS_VOLUME_DIR}:/data"
         ports:
-            - "${KONTUR_MONITORING_REDIS_PORT}:6379"
+            - "${LOOM_MONITORING_REDIS_PORT}:6379"
         command: "redis-server /etc/redis/redis.conf"
         logging: *default-logging
         restart: unless-stopped
         networks:
             - net
 
-    kontur-loki:
+    loom-loki:
         image: grafana/loki:3.5.1
-        container_name: "${KONTUR_LOKI_CONTAINER_NAME}"
+        container_name: "${LOOM_LOKI_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_LOKI_CONFIG_FILE}:/etc/loki/loki.yaml:ro"
-            - "../${KONTUR_LOKI_VOLUME_DIR}:/loki"
+            - "../${LOOM_LOKI_CONFIG_FILE}:/etc/loki/loki.yaml:ro"
+            - "../${LOOM_LOKI_VOLUME_DIR}:/loki"
         ports:
-            - "${KONTUR_LOKI_HTTP_PORT}:${KONTUR_LOKI_HTTP_PORT}"
-            - "${KONTUR_LOKI_GRPC_PORT}:${KONTUR_LOKI_GRPC_PORT}"
+            - "${LOOM_LOKI_HTTP_PORT}:${LOOM_LOKI_HTTP_PORT}"
+            - "${LOOM_LOKI_GRPC_PORT}:${LOOM_LOKI_GRPC_PORT}"
         command: [ "-config.file=/etc/loki/loki.yaml" ]
         logging: *default-logging
         restart: unless-stopped
         networks:
             - net
 
-    kontur-tempo:
+    loom-tempo:
         image: grafana/tempo:2.7.2
-        container_name: "${KONTUR_TEMPO_CONTAINER_NAME}"
+        container_name: "${LOOM_TEMPO_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_TEMPO_CONFIG_FILE}:/etc/tempo/tempo.yaml:ro"
-            - "../${KONTUR_TEMPO_VOLUME_DIR}:/var/tempo"
+            - "../${LOOM_TEMPO_CONFIG_FILE}:/etc/tempo/tempo.yaml:ro"
+            - "../${LOOM_TEMPO_VOLUME_DIR}:/var/tempo"
         ports:
-            - "${KONTUR_TEMPO_HTTP_PORT}:${KONTUR_TEMPO_HTTP_PORT}"
-            - "${KONTUR_TEMPO_GRPC_PORT}:${KONTUR_TEMPO_GRPC_PORT}"
-            - "${KONTUR_TEMPO_OTLP_HTTP_PORT}:${KONTUR_TEMPO_OTLP_HTTP_PORT}"
-            - "${KONTUR_TEMPO_OTLP_GRPC_PORT}:${KONTUR_TEMPO_OTLP_GRPC_PORT}"
+            - "${LOOM_TEMPO_HTTP_PORT}:${LOOM_TEMPO_HTTP_PORT}"
+            - "${LOOM_TEMPO_GRPC_PORT}:${LOOM_TEMPO_GRPC_PORT}"
+            - "${LOOM_TEMPO_OTLP_HTTP_PORT}:${LOOM_TEMPO_OTLP_HTTP_PORT}"
+            - "${LOOM_TEMPO_OTLP_GRPC_PORT}:${LOOM_TEMPO_OTLP_GRPC_PORT}"
         command: [ "-config.file=/etc/tempo/tempo.yaml" ]
         logging: *default-logging
         restart: unless-stopped
         networks:
             - net
 
-    kontur-victoria-metrics:
+    loom-victoria-metrics:
         image: victoriametrics/victoria-metrics:v1.118.0
-        container_name: "${KONTUR_VICTORIA_METRICS_CONTAINER_NAME}"
+        container_name: "${LOOM_VICTORIA_METRICS_CONTAINER_NAME}"
         volumes:
-            - "../${KONTUR_VICTORIA_METRICS_VOLUME_DIR}:/victoria-metrics-data"
+            - "../${LOOM_VICTORIA_METRICS_VOLUME_DIR}:/victoria-metrics-data"
         ports:
-            - "${KONTUR_VICTORIA_METRICS_HTTP_PORT}:${KONTUR_VICTORIA_METRICS_HTTP_PORT}"
+            - "${LOOM_VICTORIA_METRICS_HTTP_PORT}:${LOOM_VICTORIA_METRICS_HTTP_PORT}"
         command:
             - '-storageDataPath=/victoria-metrics-data'
             - '-retentionPeriod=30d'
@@ -193,22 +193,22 @@ services:
         networks:
             - net
 
-    kontur-weed-master:
+    loom-weed-master:
         image: chrislusf/seaweedfs
         logging: *default-logging
         container_name: vtbaihr-weed-master
         ports:
-            - "${KONTUR_WEED_MASTER_PORT}:${KONTUR_WEED_MASTER_PORT}"
+            - "${LOOM_WEED_MASTER_PORT}:${LOOM_WEED_MASTER_PORT}"
         command: "master"
         networks:
             - net
 
-    kontur-weed-volume:
+    loom-weed-volume:
         image: chrislusf/seaweedfs:latest
         container_name: vtbaihr-weed-volume
         command: >
             volume 
-            -mserver="${KONTUR_WEED_MASTER_CONTAINER_NAME}:${KONTUR_WEED_MASTER_PORT}" 
+            -mserver="${LOOM_WEED_MASTER_CONTAINER_NAME}:${LOOM_WEED_MASTER_PORT}" 
             -ip.bind=0.0.0.0 
             -port=8080 
             -dir="/data"
@@ -217,25 +217,25 @@ services:
             -dataCenter=dc1
             -rack=rack2
         volumes:
-            - "../${KONTUR_WEED_VOLUME_DIR}:/data"
+            - "../${LOOM_WEED_VOLUME_DIR}:/data"
         depends_on:
-            - kontur-weed-master
+            - loom-weed-master
         networks:
             - net
         restart: unless-stopped
         logging: *default-logging
 
-    kontur-weed-filer:
+    loom-weed-filer:
         image: chrislusf/seaweedfs:latest
         container_name: vtbaihr-weed-filer
         command: >
             filer 
-            -master="${KONTUR_WEED_MASTER_CONTAINER_NAME}:${KONTUR_WEED_MASTER_PORT}"
+            -master="${LOOM_WEED_MASTER_CONTAINER_NAME}:${LOOM_WEED_MASTER_PORT}"
             -ip.bind=0.0.0.0 
             -metricsPort=9327
         depends_on:
-            - kontur-weed-master
-            - kontur-weed-volume
+            - loom-weed-master
+            - loom-weed-volume
         networks:
             - net
         restart: unless-stopped

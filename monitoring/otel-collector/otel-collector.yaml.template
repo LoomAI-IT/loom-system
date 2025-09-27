@@ -10,8 +10,8 @@ receivers:
                 -   job_name: 'infrastructure'
                     static_configs:
                         -   targets:
-                                - '$KONTUR_NODE_EXPORTER_CONTAINER_NAME:9100'
-                                - '$KONTUR_CADVISOR_CONTAINER_NAME:8080'
+                                - '$LOOM_NODE_EXPORTER_CONTAINER_NAME:9100'
+                                - '$LOOM_CADVISOR_CONTAINER_NAME:8080'
                     relabel_configs:
                         -   source_labels: [ __address__ ]
                             regex: '.*node_exporter.*'
@@ -25,11 +25,11 @@ receivers:
                 -   job_name: 'postgres'
                     static_configs:
                         -   targets:
-                                - '$KONTUR_ACCOUNT_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
-                                - '$KONTUR_AUTHORIZATION_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
-                                - '$KONTUR_EMPLOYEE_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
-                                - '$KONTUR_ORGANIZATION_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
-                                - '$KONTUR_CONTENT_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
+                                - '$LOOM_ACCOUNT_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
+                                - '$LOOM_AUTHORIZATION_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
+                                - '$LOOM_EMPLOYEE_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
+                                - '$LOOM_ORGANIZATION_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
+                                - '$LOOM_CONTENT_POSTGRES_EXPORTER_CONTAINER_NAME:9187'
 
                     relabel_configs:
                         -   source_labels: [ __address__ ]
@@ -43,19 +43,19 @@ receivers:
 
                 -   job_name: 'redis'
                     static_configs:
-                        -   targets: [ '$KONTUR_MONITORING_REDIS_EXPORTER_CONTAINER_NAME:9121' ]
+                        -   targets: [ '$LOOM_MONITORING_REDIS_EXPORTER_CONTAINER_NAME:9121' ]
                     relabel_configs:
                         -   source_labels: [ __address__ ]
                             target_label: instance
                             regex: '([^:]+):.*'
-                            replacement: '$KONTUR_MONITORING_REDIS_EXPORTER_CONTAINER_NAME'
+                            replacement: '$LOOM_MONITORING_REDIS_EXPORTER_CONTAINER_NAME'
 
     otlp:
         protocols:
             grpc:
-                endpoint: 0.0.0.0:$KONTUR_OTEL_COLLECTOR_GRPC_PORT
+                endpoint: 0.0.0.0:$LOOM_OTEL_COLLECTOR_GRPC_PORT
             http:
-                endpoint: 0.0.0.0:$KONTUR_OTEL_COLLECTOR_HTTP_PORT
+                endpoint: 0.0.0.0:$LOOM_OTEL_COLLECTOR_HTTP_PORT
                 include_metadata: true
 
     prometheus/internal:
@@ -109,7 +109,7 @@ processors:
 
 exporters:
     prometheusremotewrite:
-        endpoint: http://$KONTUR_VICTORIA_METRICS_CONTAINER_NAME:$KONTUR_VICTORIA_METRICS_HTTP_PORT/api/v1/write
+        endpoint: http://$LOOM_VICTORIA_METRICS_CONTAINER_NAME:$LOOM_VICTORIA_METRICS_HTTP_PORT/api/v1/write
         send_metadata: true
         add_metric_suffixes: false
         timeout: 30s
@@ -122,7 +122,7 @@ exporters:
             max_elapsed_time: 300s
 
     otlp/tempo:
-        endpoint: $KONTUR_TEMPO_CONTAINER_NAME:$KONTUR_TEMPO_OTLP_GRPC_PORT
+        endpoint: $LOOM_TEMPO_CONTAINER_NAME:$LOOM_TEMPO_OTLP_GRPC_PORT
         tls:
             insecure: true
         retry_on_failure:
@@ -131,7 +131,7 @@ exporters:
             enabled: true
 
     otlphttp/loki:
-        endpoint: http://$KONTUR_LOKI_CONTAINER_NAME:$KONTUR_LOKI_HTTP_PORT/otlp
+        endpoint: http://$LOOM_LOKI_CONTAINER_NAME:$LOOM_LOKI_HTTP_PORT/otlp
         retry_on_failure:
             enabled: true
             initial_interval: 5s

@@ -8,24 +8,24 @@ set-env:
 	@export $(cat env/.env.app env/.env.db env/.env.monitoring | xargs)
 
 set-env-to-config-template:
-	@envsubst < ${KONTUR_LOKI_CONFIG_FILE}.template > ${KONTUR_LOKI_CONFIG_FILE}
-	@envsubst < ${KONTUR_MONITORING_REDIS_CONFIG_FILE}.template > ${KONTUR_MONITORING_REDIS_CONFIG_FILE}
-	@envsubst < ${KONTUR_TEMPO_CONFIG_FILE}.template > ${KONTUR_TEMPO_CONFIG_FILE}
-	@envsubst < ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}.template > ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}
+	@envsubst < ${LOOM_LOKI_CONFIG_FILE}.template > ${LOOM_LOKI_CONFIG_FILE}
+	@envsubst < ${LOOM_MONITORING_REDIS_CONFIG_FILE}.template > ${LOOM_MONITORING_REDIS_CONFIG_FILE}
+	@envsubst < ${LOOM_TEMPO_CONFIG_FILE}.template > ${LOOM_TEMPO_CONFIG_FILE}
+	@envsubst < ${LOOM_OTEL_COLLECTOR_CONFIG_FILE}.template > ${LOOM_OTEL_COLLECTOR_CONFIG_FILE}
 
 deploy:
 	@apt update && apt upgrade -y
 	@apt install python3-pip git make
 	@pip install requests --break-system-packages
 	@cd ..
-	@git clone git@github.com:KonturAI/kontur-tg-bot.git
-	@git clone git@github.com:KonturAI/kontur-release-tg-bot.git
-	@git clone git@github.com:KonturAI/kontur-account.git
-	@git clone git@github.com:KonturAI/kontur-authorization.git
-	@git clone git@github.com:KonturAI/kontur-employee.git
-	@git clone git@github.com:KonturAI/kontur-organization.git
-	@git clone git@github.com:KonturAI/kontur-content.git
-	@cd kontur-system
+	@git clone git@github.com:LoomAI-IT/loom-tg-bot.git
+	@git clone git@github.com:LoomAI-IT/loom-release-tg-bot.git
+	@git clone git@github.com:LoomAI-IT/loom-account.git
+	@git clone git@github.com:LoomAI-IT/loom-authorization.git
+	@git clone git@github.com:LoomAI-IT/loom-employee.git
+	@git clone git@github.com:LoomAI-IT/loom-organization.git
+	@git clone git@github.com:LoomAI-IT/loom-content.git
+	@cd loom-system
 	@./infrastructure/nginx/install.sh
 	@./infrastructure/docker/install.sh
 	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics,tg-bot-api}
@@ -43,18 +43,18 @@ build-all: set-env-to-config-template
 
 
 stop-all:
-	@docker compose -f ./docker-compose/apps.yaml down
+	@docker compose -f ./docker-compose/app.yaml down
 	@docker compose -f ./docker-compose/monitoring.yaml down
 	@docker compose -f ./docker-compose/db.yaml down
 
 update-all:
 	@git pull
-	@cd ../kontur-tg-bot/ && git pull && cd ../kontur-system/
-	@cd ../kontur-account/ && git pull && cd ../kontur-system/
-	@cd ../kontur-authorization/ && git pull && cd ../kontur-system/
-	@cd ../kontur-employee/ && git pull && cd ../kontur-system/
-	@cd ../kontur-organization/ && git pull && cd ../kontur-system/
-	@cd ../kontur-content/ && git pull && cd ../kontur-system/
+	@cd ../loom-tg-bot/ && git pull && cd ../loom-system/
+	@cd ../loom-account/ && git pull && cd ../loom-system/
+	@cd ../loom-authorization/ && git pull && cd ../loom-system/
+	@cd ../loom-employee/ && git pull && cd ../loom-system/
+	@cd ../loom-organization/ && git pull && cd ../loom-system/
+	@cd ../loom-content/ && git pull && cd ../loom-system/
 
 rebuild-all: update-all build-all
 
