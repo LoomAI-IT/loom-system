@@ -49,12 +49,12 @@ stop-all:
 
 update-all:
 	@git pull
-	@cd ../loom-tg-bot/ && git pull && cd ../loom-system/
-	@cd ../loom-account/ && git pull && cd ../loom-system/
-	@cd ../loom-authorization/ && git pull && cd ../loom-system/
-	@cd ../loom-employee/ && git pull && cd ../loom-system/
-	@cd ../loom-organization/ && git pull && cd ../loom-system/
-	@cd ../loom-content/ && git pull && cd ../loom-system/
+	@cd ../loom-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-account/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-authorization/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-employee/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-organization/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-content/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 
 rebuild-all: update-all build-all
 
