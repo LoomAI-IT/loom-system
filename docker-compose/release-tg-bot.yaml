@@ -1,0 +1,42 @@
+x-logging: &default-logging
+    driver: "json-file"
+    options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+    net:
+        name: net
+        external: true
+
+services:
+    kontur-tg-release-bot-postgres:
+        image: postgres:latest
+        container_name: "${KONTUR_TG_RELEASE_BOT_POSTGRES_CONTAINER_NAME}"
+        volumes:
+            - "../${KONTUR_TG_RELEASE_BOT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+        ports:
+            - "${KONTUR_TG_RELEASE_BOT_POSTGRES_PORT}:5432"
+        environment:
+            POSTGRES_DB: "${KONTUR_TG_RELEASE_BOT_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${KONTUR_TG_RELEASE_BOT_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${KONTUR_TG_RELEASE_BOT_POSTGRES_PASSWORD}"
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
+    kontur-release-tg-bot:
+        build:
+            context: "../../${KONTUR_TG_RELEASE_BOT_CONTAINER_NAME}"
+            dockerfile: "${KONTUR_TG_RELEASE_BOT_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${KONTUR_TG_RELEASE_BOT_CONTAINER_NAME}"
+        env_file:
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
+        ports:
+            - "${KONTUR_TG_RELEASE_BOT_PORT}:${KONTUR_TG_RELEASE_BOT_PORT}"
+        restart: unless-stopped
+        networks:
+            - net
