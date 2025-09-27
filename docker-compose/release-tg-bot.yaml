@@ -11,7 +11,7 @@ networks:
 
 services:
     kontur-release-tg-bot-postgres:
-        image: postgres:latest
+        image: postgres:17.6
         container_name: "${KONTUR_TG_RELEASE_BOT_POSTGRES_CONTAINER_NAME}"
         volumes:
             - "../${KONTUR_TG_RELEASE_BOT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
