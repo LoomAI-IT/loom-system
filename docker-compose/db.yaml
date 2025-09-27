@@ -196,7 +196,7 @@ services:
     loom-weed-master:
         image: chrislusf/seaweedfs
         logging: *default-logging
-        container_name: vtbaihr-weed-master
+        container_name: loom-weed-master
         ports:
             - "${LOOM_WEED_MASTER_PORT}:${LOOM_WEED_MASTER_PORT}"
         command: "master"
@@ -205,7 +205,7 @@ services:
 
     loom-weed-volume:
         image: chrislusf/seaweedfs:latest
-        container_name: vtbaihr-weed-volume
+        container_name: loom-weed-volume
         command: >
             volume 
             -mserver="${LOOM_WEED_MASTER_CONTAINER_NAME}:${LOOM_WEED_MASTER_PORT}" 
@@ -227,7 +227,7 @@ services:
 
     loom-weed-filer:
         image: chrislusf/seaweedfs:latest
-        container_name: vtbaihr-weed-filer
+        container_name: loom-weed-filer
         command: >
             filer 
             -master="${LOOM_WEED_MASTER_CONTAINER_NAME}:${LOOM_WEED_MASTER_PORT}"
