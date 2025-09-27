@@ -26,7 +26,7 @@ services:
             - "8082:8082"
 
     kontur-tg-bot-postgres:
-        image: postgres:latest
+        image: postgres:17.6
         container_name: "${KONTUR_TG_BOT_POSTGRES_CONTAINER_NAME}"
         volumes:
             - "../${KONTUR_TG_BOT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
@@ -36,6 +36,7 @@ services:
             POSTGRES_DB: "${KONTUR_TG_BOT_POSTGRES_DB_NAME}"
             POSTGRES_USER: "${KONTUR_TG_BOT_POSTGRES_USER}"
             POSTGRES_PASSWORD: "${KONTUR_TG_BOT_POSTGRES_PASSWORD}"
+            PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
@@ -52,6 +53,7 @@ services:
             POSTGRES_DB: "${KONTUR_ACCOUNT_POSTGRES_DB_NAME}"
             POSTGRES_USER: "${KONTUR_ACCOUNT_POSTGRES_USER}"
             POSTGRES_PASSWORD: "${KONTUR_ACCOUNT_POSTGRES_PASSWORD}"
+            PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
@@ -68,6 +70,7 @@ services:
             POSTGRES_DB: "${KONTUR_AUTHORIZATION_POSTGRES_DB_NAME}"
             POSTGRES_USER: "${KONTUR_AUTHORIZATION_POSTGRES_USER}"
             POSTGRES_PASSWORD: "${KONTUR_AUTHORIZATION_POSTGRES_PASSWORD}"
+            PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
@@ -84,6 +87,7 @@ services:
             POSTGRES_DB: "${KONTUR_EMPLOYEE_POSTGRES_DB_NAME}"
             POSTGRES_USER: "${KONTUR_EMPLOYEE_POSTGRES_USER}"
             POSTGRES_PASSWORD: "${KONTUR_EMPLOYEE_POSTGRES_PASSWORD}"
+            PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
@@ -100,6 +104,7 @@ services:
             POSTGRES_DB: "${KONTUR_ORGANIZATION_POSTGRES_DB_NAME}"
             POSTGRES_USER: "${KONTUR_ORGANIZATION_POSTGRES_USER}"
             POSTGRES_PASSWORD: "${KONTUR_ORGANIZATION_POSTGRES_PASSWORD}"
+            PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:
@@ -116,6 +121,7 @@ services:
             POSTGRES_DB: "${KONTUR_CONTENT_POSTGRES_DB_NAME}"
             POSTGRES_USER: "${KONTUR_CONTENT_POSTGRES_USER}"
             POSTGRES_PASSWORD: "${KONTUR_CONTENT_POSTGRES_PASSWORD}"
+            PGDATA: /var/lib/postgresql/data/pgdata
         logging: *default-logging
         restart: unless-stopped
         networks:

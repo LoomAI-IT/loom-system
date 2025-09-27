@@ -15,7 +15,7 @@ set-env-to-config-template:
 
 deploy:
 	@apt update && apt upgrade -y
-	@apt install python3-pip git
+	@apt install python3-pip git make
 	@pip install requests --break-system-packages
 	@cd ..
 	@git clone git@github.com:KonturAI/kontur-tg-bot.git
@@ -39,7 +39,6 @@ build-all: set-env-to-config-template
 	sleep 20
 	@docker compose -f ./docker-compose/monitoring.yaml up --build
 	sleep 20
-	@docker compose -f ./docker-compose/app.yaml up --build
 	@docker compose -f ./docker-compose/app.yaml up --build
 
 
