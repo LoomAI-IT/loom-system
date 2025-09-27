@@ -10,7 +10,7 @@ networks:
         external: true
 
 services:
-    kontur-tg-release-bot-postgres:
+    kontur-release-tg-bot-postgres:
         image: postgres:latest
         container_name: "${KONTUR_TG_RELEASE_BOT_POSTGRES_CONTAINER_NAME}"
         volumes:

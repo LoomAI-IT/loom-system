@@ -14,12 +14,12 @@ set-env-to-config-template:
 	@envsubst < ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}.template > ${KONTUR_OTEL_COLLECTOR_CONFIG_FILE}
 
 deploy:
-	@apt update && apt upgrade
+	@apt update && apt upgrade -y
 	@apt install python3-pip git
-	@pip install requests
+	@pip install requests --break-system-packages
 	@cd ..
 	@git clone git@github.com:KonturAI/kontur-tg-bot.git
-	@git clone git@github.com:KonturAI/kontur-tg-release-bot.git
+	@git clone git@github.com:KonturAI/kontur-release-tg-bot.git
 	@git clone git@github.com:KonturAI/kontur-account.git
 	@git clone git@github.com:KonturAI/kontur-authorization.git
 	@git clone git@github.com:KonturAI/kontur-employee.git
@@ -31,7 +31,7 @@ deploy:
 	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics,tg-bot-api}
 	@mkdir -p volumes/redis/monitoring
 	@mkdir -p volumes/weed
-	@mkdir -p volumes/postgresql/{tg-bot,tg-release-bot,account,authorization,employee,organization,content,grafana}
+	@mkdir -p volumes/postgresql/{tg-bot,release-tg-bot,account,authorization,employee,organization,content,grafana}
 	@chmod -R 777 volumes
 
 build-all: set-env-to-config-template
