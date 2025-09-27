@@ -19,6 +19,7 @@ deploy:
 	@pip install requests
 	@cd ..
 	@git clone git@github.com:KonturAI/kontur-tg-bot.git
+	@git clone git@github.com:KonturAI/kontur-tg-release-bot.git
 	@git clone git@github.com:KonturAI/kontur-account.git
 	@git clone git@github.com:KonturAI/kontur-authorization.git
 	@git clone git@github.com:KonturAI/kontur-employee.git
@@ -30,7 +31,7 @@ deploy:
 	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics,tg-bot-api}
 	@mkdir -p volumes/redis/monitoring
 	@mkdir -p volumes/weed
-	@mkdir -p volumes/postgresql/{tg-bot,account,authorization,employee,organization,content,grafana}
+	@mkdir -p volumes/postgresql/{tg-bot,tg-release-bot,account,authorization,employee,organization,content,grafana}
 	@chmod -R 777 volumes
 
 build-all: set-env-to-config-template
@@ -38,6 +39,7 @@ build-all: set-env-to-config-template
 	sleep 20
 	@docker compose -f ./docker-compose/monitoring.yaml up --build
 	sleep 20
+	@docker compose -f ./docker-compose/app.yaml up --build
 	@docker compose -f ./docker-compose/app.yaml up --build
 
 
