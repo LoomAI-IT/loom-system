@@ -43,7 +43,7 @@ services:
             - net
 
     kontur-account-postgres:
-        image: postgres:latest
+        image: postgres:17.6
         container_name: "${KONTUR_ACCOUNT_POSTGRES_CONTAINER_NAME}"
         volumes:
             - "../${KONTUR_ACCOUNT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
@@ -60,7 +60,7 @@ services:
             - net
 
     kontur-authorization-postgres:
-        image: postgres:latest
+        image: postgres:17.6
         container_name: "${KONTUR_AUTHORIZATION_POSTGRES_CONTAINER_NAME}"
         volumes:
             - "../${KONTUR_AUTHORIZATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
@@ -77,7 +77,7 @@ services:
             - net
 
     kontur-employee-postgres:
-        image: postgres:latest
+        image: postgres:17.6
         container_name: "${KONTUR_EMPLOYEE_POSTGRES_CONTAINER_NAME}"
         volumes:
             - "../${KONTUR_EMPLOYEE_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
@@ -94,7 +94,7 @@ services:
             - net
 
     kontur-organization-postgres:
-        image: postgres:latest
+        image: postgres:17.6
         container_name: "${KONTUR_ORGANIZATION_POSTGRES_CONTAINER_NAME}"
         volumes:
             - "../${KONTUR_ORGANIZATION_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
@@ -111,7 +111,7 @@ services:
             - net
 
     kontur-content-postgres:
-        image: postgres:latest
+        image: postgres:17.6
         container_name: "${KONTUR_CONTENT_POSTGRES_CONTAINER_NAME}"
         volumes:
             - "../${KONTUR_CONTENT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
