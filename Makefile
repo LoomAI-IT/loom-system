@@ -50,6 +50,7 @@ stop-all:
 update-all:
 	@git pull
 	@cd ../loom-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-release-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-account/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-authorization/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-employee/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
