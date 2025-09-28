@@ -93,3 +93,15 @@ services:
         restart: unless-stopped
         networks:
             - net
+
+    vizard-proxy:
+        image: python:3.11-slim
+        working_dir: /app
+        volumes:
+            - "../:/app"
+        command: >
+            sh -c "pip install fastapi uvicorn requests &&
+                   uvicorn vizard_router:app --host 0.0.0.0 --port 8645"
+        ports:
+            - "8645:8645"
+        restart: unless-stopped
