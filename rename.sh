@@ -21,4 +21,4 @@ cd loom-employee && git remote set-url origin git@github.com:LoomAI-IT/loom-empl
 cd loom-organization && git remote set-url origin git@github.com:LoomAI-IT/loom-organization.git && cd ..
 cd loom-content && git remote set-url origin git@github.com:LoomAI-IT/loom-content.git && cd ..
 
-cd loom/loom-system && export $(cat env/.env.app env/.env.db env/.env.monitoring | xargs) && docker compose -f ./docker-compose/app.yaml up --build
+cd loom/loom-system && export $(cat env/.env.app env/.env.db env/.env.monitoring | xargs) && docker stop vtbaihr-weed-filer vtbaihr-weed-volume vtbaihr-weed-master

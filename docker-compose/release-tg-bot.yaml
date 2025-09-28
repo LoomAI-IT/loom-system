@@ -36,6 +36,7 @@ services:
             - "../env/.env.app"
             - "../env/.env.db"
             - "../env/.env.monitoring"
+            - "../env/.env.servers"
         ports:
             - "${LOOM_RELEASE_TG_BOT_PORT}:${LOOM_RELEASE_TG_BOT_PORT}"
         restart: unless-stopped
