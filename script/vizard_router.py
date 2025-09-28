@@ -35,7 +35,7 @@ class CreateVizardVideoCutsBody(BaseModel):
     creditsUsed: int
 
 
-@app.post("/vizard-router")
+@app.post("/api/vizard/create")
 def create_vizard_video(body: CreateVizardVideoCutsBody):
     data = body.model_dump()
 
