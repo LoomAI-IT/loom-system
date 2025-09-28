@@ -98,7 +98,7 @@ services:
         image: python:3.11-slim
         working_dir: /app
         volumes:
-            - "../:/app"
+            - "../script:/app"
         command: >
             sh -c "pip install fastapi uvicorn requests &&
                    uvicorn vizard_router:app --host 0.0.0.0 --port 8645"
