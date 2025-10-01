@@ -33,6 +33,7 @@ deploy:
 	@mkdir -p volumes/weed
 	@mkdir -p volumes/postgresql/{tg-bot,release-tg-bot,account,authorization,employee,organization,content,grafana}
 	@chmod -R 777 volumes
+	@docker build -f script/migration/Dockerfile -t migration-base:latest .
 
 build-all: set-env-to-config-template
 	@docker compose -f ./docker-compose/db.yaml up --build
