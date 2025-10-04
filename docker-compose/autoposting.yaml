@@ -1,0 +1,20 @@
+networks:
+    net:
+        name: net
+        external: true  # Создается в docker-compose.db.yaml
+
+services:
+    loom-content:
+        build:
+            context: "../../${LOOM_CONTENT_CONTAINER_NAME}"
+            dockerfile: "${LOOM_CONTENT_DOCKERFILE_DIR}/DockerfileAutoposting"
+        container_name: "${LOOM_CONTENT_CONTAINER_NAME}"
+        env_file:
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
+        ports:
+            - "${LOOM_CONTENT_PORT}:${LOOM_CONTENT_PORT}"
+        restart: unless-stopped
+        networks:
+            - net

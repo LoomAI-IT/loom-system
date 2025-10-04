@@ -82,7 +82,7 @@ services:
     loom-content:
         build:
             context: "../../${LOOM_CONTENT_CONTAINER_NAME}"
-            dockerfile: "${LOOM_CONTENT_DOCKERFILE_DIR}/Dockerfile"
+            dockerfile: "${LOOM_CONTENT_DOCKERFILE_DIR}/DockerfileHTTP"
         container_name: "${LOOM_CONTENT_CONTAINER_NAME}"
         env_file:
             - "../env/.env.app"
