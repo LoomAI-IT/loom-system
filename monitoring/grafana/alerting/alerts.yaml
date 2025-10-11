@@ -262,14 +262,14 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [80]
+                                        params: [5]
                                         type: gt
                                     type: query
                             refId: C
 
                 noDataState: NoData
                 execErrState: Error
-                for: 3m
+                for: 1m
                 annotations:
                     description: 'Использование диска: {{ printf "%.2f" $values.A.value }}%'
                 labels:
