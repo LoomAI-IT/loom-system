@@ -46,7 +46,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Использование RAM: {{ printf "%.2f" $values.A.Value }}%'
+                    description: 'Использование RAM: {{ printf "%.2f" $values.A.value }}%'
                 labels:
                     severity: warning
                     component: memory
@@ -82,7 +82,7 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [10]
+                                        params: [90]
                                         type: gt
                                     type: query
                             refId: C
@@ -91,7 +91,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Использование RAM: {{ printf "%.2f" $values.A.Value }}%'
+                    description: 'Использование RAM: {{ printf "%.2f" $values.A.value }}%'
                 labels:
                     severity: critical
                     component: memory
@@ -136,7 +136,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Загрузка CPU: {{ printf "%.2f" $values.A.Value }}%'
+                    description: 'Загрузка CPU: {{ printf "%.2f" $values.A.value }}%'
                 labels:
                     severity: warning
                     component: cpu
@@ -172,7 +172,7 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [3]
+                                        params: [90]
                                         type: gt
                                     type: query
                             refId: C
@@ -181,7 +181,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Загрузка CPU: {{ printf "%.2f" $values.A.Value }}%'
+                    description: 'Загрузка CPU: {{ printf "%.2f" $values.A.value }}%'
                 labels:
                     severity: critical
                     component: cpu
@@ -226,7 +226,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Использование диска: {{ printf "%.2f" $values.A.Value }}%'
+                    description: 'Использование диска: {{ printf "%.2f" $values.A.value }}%'
                 labels:
                     severity: warning
                     component: disk
@@ -271,7 +271,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Использование диска: {{ printf "%.2f" $values.A.Value }}%'
+                    description: 'Использование диска: {{ printf "%.2f" $values.A.value }}%'
                 labels:
                     severity: critical
                     component: disk

@@ -11,13 +11,15 @@ contactPoints:
                     chatid: "-1003041223347"
                     message_thread_id: '35'
                     message: |
-                        {{ if eq .Status "firing" }}🔴 FIRING{{ else }}🟢 RESOLVED{{ end }}
-                        {{ range .Alerts }}
-                        📊 {{ .Labels.alertname }}
-                        💬 {{ .Annotations.description }}
-                        ⚠️ Severity: {{ .Labels.severity }}
-                        🕐 Started: {{ .StartsAt.Format "15:04:05" }}
+                        {{ if eq .Status "firing" }}<b>🚨 Проблемы на сервре</b>{{ else }}<b>🟢 Проблемы на сервре миновали</b>{{ end }}
+                        
+                        {{ range .Alerts -}}
+                        <b>Алерт:</b> {{ .Labels.alertname }}
+                        <b>Время:</b> {{ .StartsAt.Format "15:04:05" }}
+                        <b>Уровень:</b> <code>{{ .Labels.severity }}</code>
+                        
+                        {{ .Annotations.description }}
                         {{ end }}
-                    parse_mode: ''
+                    parse_mode: 'HTML'
                     disable_notifications: false
                 disableResolveMessage: false
