@@ -4,7 +4,7 @@ groups:
     -   orgId: 1
         name: infrastructure_alerts
         folder: Infrastructure
-        interval: 1m
+        interval: 3m
         rules:
             # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             # RAM - WARNING
@@ -37,7 +37,7 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [70]
+                                        params: [80]
                                         type: gt
                                     type: query
                             refId: C
@@ -82,16 +82,16 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [10]
+                                        params: [90]
                                         type: gt
                                     type: query
                             refId: C
 
                 noDataState: NoData
                 execErrState: Error
-                for: 1m
+                for: 3m
                 annotations:
-                    description: 'Использование RAM больше 80%'
+                    description: 'Использование RAM больше 90%'
                 labels:
                     severity: critical
                     component: memory
@@ -127,7 +127,7 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [70]
+                                        params: [80]
                                         type: gt
                                     type: query
                             refId: C
@@ -181,7 +181,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Загрузка CPU больше 80%'
+                    description: 'Загрузка CPU больше 90%'
                 labels:
                     severity: critical
                     component: cpu
@@ -217,7 +217,7 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [70]
+                                        params: [80]
                                         type: gt
                                     type: query
                             refId: C
@@ -262,16 +262,16 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [5]
+                                        params: [90]
                                         type: gt
                                     type: query
                             refId: C
 
                 noDataState: NoData
                 execErrState: Error
-                for: 1m
+                for: 3m
                 annotations:
-                    description: 'Использование диска больше 80%'
+                    description: 'Использование диска больше 90%'
                 labels:
                     severity: critical
                     component: disk
