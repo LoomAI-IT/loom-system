@@ -6,12 +6,13 @@ groups:
         folder: Infrastructure
         interval: 1m
         rules:
-            # ОЗУ
-            -   uid: ram_usage_alert
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            # RAM - WARNING
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            -   uid: ram_usage_warning
                 title: High RAM Usage
-                condition: C  # ← Указываем на threshold
+                condition: C
                 data:
-                    # Запрос данных
                     -   refId: A
                         relativeTimeRange:
                             from: 300
@@ -21,7 +22,6 @@ groups:
                             expr: 'clamp_min((1 - (node_memory_MemAvailable_bytes{instance="loom-node-exporter:9100", job="infrastructure"} / node_memory_MemTotal_bytes{instance="loom-node-exporter:9100", job="infrastructure"})) * 100, 0)'
                             refId: A
 
-                    # Reduce: последнее значение
                     -   refId: B
                         datasourceUid: __expr__
                         model:
@@ -30,7 +30,6 @@ groups:
                             reducer: last
                             refId: B
 
-                    # Threshold: порог 80%
                     -   refId: C
                         datasourceUid: __expr__
                         model:
@@ -38,23 +37,69 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [10]  # ← Порог
-                                        type: gt      # greater than
+                                        params: [70]
+                                        type: gt
                                     type: query
                             refId: C
 
                 noDataState: NoData
                 execErrState: Error
-                for: 5m
+                for: 3m
                 annotations:
-                    summary: '⚠️ Высокое использование RAM'
                     description: 'Использование RAM: {{ printf "%.2f" $values.A.Value }}%'
                 labels:
                     severity: warning
                     component: memory
 
-            # ЦПУ
-            -   uid: cpu_usage_alert
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            # RAM - CRITICAL
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            -   uid: ram_usage_critical
+                title: Critical RAM Usage
+                condition: C
+                data:
+                    -   refId: A
+                        relativeTimeRange:
+                            from: 300
+                            to: 0
+                        datasourceUid: victoria-metrics
+                        model:
+                            expr: 'clamp_min((1 - (node_memory_MemAvailable_bytes{instance="loom-node-exporter:9100", job="infrastructure"} / node_memory_MemTotal_bytes{instance="loom-node-exporter:9100", job="infrastructure"})) * 100, 0)'
+                            refId: A
+
+                    -   refId: B
+                        datasourceUid: __expr__
+                        model:
+                            type: reduce
+                            expression: A
+                            reducer: last
+                            refId: B
+
+                    -   refId: C
+                        datasourceUid: __expr__
+                        model:
+                            type: threshold
+                            expression: B
+                            conditions:
+                                -   evaluator:
+                                        params: [10]
+                                        type: gt
+                                    type: query
+                            refId: C
+
+                noDataState: NoData
+                execErrState: Error
+                for: 3m
+                annotations:
+                    description: 'Использование RAM: {{ printf "%.2f" $values.A.Value }}%'
+                labels:
+                    severity: critical
+                    component: memory
+
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            # CPU - WARNING
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            -   uid: cpu_usage_warning
                 title: High CPU Usage
                 condition: C
                 data:
@@ -82,7 +127,7 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [75]  # Порог 75%
+                                        params: [70]
                                         type: gt
                                     type: query
                             refId: C
@@ -91,14 +136,60 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    summary: '⚠️ Высокая загрузка CPU'
                     description: 'Загрузка CPU: {{ printf "%.2f" $values.A.Value }}%'
                 labels:
                     severity: warning
                     component: cpu
 
-            # Диск
-            -   uid: disk_usage_alert
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            # CPU - CRITICAL
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            -   uid: cpu_usage_critical
+                title: Critical CPU Usage
+                condition: C
+                data:
+                    -   refId: A
+                        relativeTimeRange:
+                            from: 300
+                            to: 0
+                        datasourceUid: victoria-metrics
+                        model:
+                            expr: '100 * (1 - avg(rate(node_cpu_seconds_total{mode="idle", instance="loom-node-exporter:9100"}[2m])))'
+                            refId: A
+
+                    -   refId: B
+                        datasourceUid: __expr__
+                        model:
+                            type: reduce
+                            expression: A
+                            reducer: last
+                            refId: B
+
+                    -   refId: C
+                        datasourceUid: __expr__
+                        model:
+                            type: threshold
+                            expression: B
+                            conditions:
+                                -   evaluator:
+                                        params: [80]
+                                        type: gt
+                                    type: query
+                            refId: C
+
+                noDataState: NoData
+                execErrState: Error
+                for: 3m
+                annotations:
+                    description: 'Загрузка CPU: {{ printf "%.2f" $values.A.Value }}%'
+                labels:
+                    severity: critical
+                    component: cpu
+
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            # DISK - WARNING
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            -   uid: disk_usage_warning
                 title: High Disk Usage
                 condition: C
                 data:
@@ -126,16 +217,60 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [85]  # Порог 85%
+                                        params: [70]
                                         type: gt
                                     type: query
                             refId: C
 
                 noDataState: NoData
                 execErrState: Error
-                for: 10m
+                for: 3m
                 annotations:
-                    summary: '🔴 Критическое заполнение диска'
+                    description: 'Использование диска: {{ printf "%.2f" $values.A.Value }}%'
+                labels:
+                    severity: warning
+                    component: disk
+
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            # DISK - CRITICAL
+            # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            -   uid: disk_usage_critical
+                title: Critical Disk Usage
+                condition: C
+                data:
+                    -   refId: A
+                        relativeTimeRange:
+                            from: 300
+                            to: 0
+                        datasourceUid: victoria-metrics
+                        model:
+                            expr: '((node_filesystem_size_bytes{instance="loom-node-exporter:9100", job="infrastructure", mountpoint="/", fstype!="rootfs"} - node_filesystem_avail_bytes{instance="loom-node-exporter:9100", job="infrastructure", mountpoint="/", fstype!="rootfs"}) / node_filesystem_size_bytes{instance="loom-node-exporter:9100", job="infrastructure", mountpoint="/", fstype!="rootfs"}) * 100'
+                            refId: A
+
+                    -   refId: B
+                        datasourceUid: __expr__
+                        model:
+                            type: reduce
+                            expression: A
+                            reducer: last
+                            refId: B
+
+                    -   refId: C
+                        datasourceUid: __expr__
+                        model:
+                            type: threshold
+                            expression: B
+                            conditions:
+                                -   evaluator:
+                                        params: [80]
+                                        type: gt
+                                    type: query
+                            refId: C
+
+                noDataState: NoData
+                execErrState: Error
+                for: 3m
+                annotations:
                     description: 'Использование диска: {{ printf "%.2f" $values.A.Value }}%'
                 labels:
                     severity: critical
