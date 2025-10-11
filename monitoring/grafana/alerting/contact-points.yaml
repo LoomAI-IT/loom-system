@@ -19,6 +19,6 @@ contactPoints:
                         
                         ⏰ Начало: {{ .StartsAt.Format "15:04:05 02.01.2006" }}
                         {{ end }}
-                    parse_mode: Markdown
+                    parse_mode: ''
                     disable_notifications: false
                 disableResolveMessage: false
