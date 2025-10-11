@@ -8,8 +8,7 @@ contactPoints:
                 type: telegram
                 settings:
                     bottoken: '8386883771:AAHla_tuDP7RHABpNi1ta0ai6GMD6EZVTfk'
-                    chatid: -1003041223347
-                    message_thread_id: 35
+                    chatid: "-1003041223347"
                     message: |
                         {{ if eq .Status "firing" }}🔥 АЛЕРТ{{ else }}✅ RESOLVED{{ end }}
                         
