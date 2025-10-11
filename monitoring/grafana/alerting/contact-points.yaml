@@ -14,8 +14,8 @@ contactPoints:
                         {{ if eq .Status "firing" }}<b>🚨 Проблемы на сервре</b>{{ else }}<b>🟢 Проблемы на сервре миновали</b>{{ end }}
                         
                         {{ range .Alerts -}}
-                        <b>Алерт:</b> {{ .Labels.alertname }}
-                        <b>Время:</b> {{ .StartsAt.Format "15:04:05" }}
+                        <b>Алерт:</b> <code>{{ .Labels.alertname }}</code>
+                        <b>Время:</b> <code>{{ .StartsAt.Format "15:04:05" }}</code>
                         <b>Уровень:</b> <code>{{ .Labels.severity }}</code>
                         
                         {{ .Annotations.description }}
