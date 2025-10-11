@@ -51,6 +51,7 @@ services:
         volumes:
             - "../${LOOM_GRAFANA_VOLUME_DIR}:/var/lib/grafana"
             - "../${LOOM_GRAFANA_DATASOURCES}:/etc/grafana/provisioning/datasources/datasources.yaml"
+            - "../monitoring/grafana/alerting:/etc/grafana/provisioning/alerting"
         ports:
             - "${LOOM_GRAFANA_PORT}:3000"
         environment:

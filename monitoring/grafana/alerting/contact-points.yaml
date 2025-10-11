@@ -1,0 +1,25 @@
+apiVersion: 1
+
+contactPoints:
+    -   orgId: 1
+        name: telegram_infrastructure
+        receivers:
+            -   uid: telegram_infrastructure
+                type: telegram
+                settings:
+                    bottoken: '8386883771:AAHla_tuDP7RHABpNi1ta0ai6GMD6EZVTfk'
+                    chatid: '-1003041223347'
+                    message_thread_id: '35'
+                    message: |
+                        {{ if eq .Status "firing" }}🔥 АЛЕРТ{{ else }}✅ RESOLVED{{ end }}
+                        
+                        📊 *{{ .Labels.alertname }}*
+                        {{ range .Alerts }}
+                        {{ .Annotations.summary }}
+                        {{ .Annotations.description }}
+                        
+                        ⏰ Начало: {{ .StartsAt.Format "15:04:05 02.01.2006" }}
+                        {{ end }}
+                    parse_mode: Markdown
+                    disable_notifications: false
+                disableResolveMessage: false
