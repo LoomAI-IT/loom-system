@@ -11,14 +11,10 @@ contactPoints:
                     chatid: "-1003041223347"
                     message_thread_id: '35'
                     message: |
-                        {{ if eq .Status "firing" }}🔥 АЛЕРТ{{ else }}✅ RESOLVED{{ end }}
-                        
-                        📊 *{{ .Labels.alertname }}*
+                        {{ if eq .Status "firing" }}🔴{{ else }}🟢{{ end }} {{ .Labels.alertname }}
                         {{ range .Alerts }}
-                        {{ .Annotations.summary }}
                         {{ .Annotations.description }}
-                        
-                        ⏰ Начало: {{ .StartsAt.Format "15:04:05 02.01.2006" }}
+                        {{ .Labels.severity }} · {{ .StartsAt.Format "15:04" }}
                         {{ end }}
                     parse_mode: ''
                     disable_notifications: false
