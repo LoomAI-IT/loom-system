@@ -172,7 +172,7 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [80]
+                                        params: [10]
                                         type: gt
                                     type: query
                             refId: C
