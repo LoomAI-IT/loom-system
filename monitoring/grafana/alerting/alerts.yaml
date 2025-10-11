@@ -46,7 +46,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Использование RAM: {{ printf "%.2f" $values.A.value }}%'
+                    description: 'Использование RAM больше 80%'
                 labels:
                     severity: warning
                     component: memory
@@ -82,16 +82,16 @@ groups:
                             expression: B
                             conditions:
                                 -   evaluator:
-                                        params: [90]
+                                        params: [10]
                                         type: gt
                                     type: query
                             refId: C
 
                 noDataState: NoData
                 execErrState: Error
-                for: 3m
+                for: 1m
                 annotations:
-                    description: 'Использование RAM: {{ printf "%.2f" $values.A.value }}%'
+                    description: 'Использование RAM больше 80%'
                 labels:
                     severity: critical
                     component: memory
@@ -136,7 +136,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Загрузка CPU: {{ printf "%.2f" $values.A.value }}%'
+                    description: 'Загрузка CPU больше 80%'
                 labels:
                     severity: warning
                     component: cpu
@@ -181,7 +181,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Загрузка CPU: {{ printf "%.2f" $values.A.value }}%'
+                    description: 'Загрузка CPU больше 80%'
                 labels:
                     severity: critical
                     component: cpu
@@ -226,7 +226,7 @@ groups:
                 execErrState: Error
                 for: 3m
                 annotations:
-                    description: 'Использование диска: {{ printf "%.2f" $values.A.value }}%'
+                    description: 'Использование диска больше 80%'
                 labels:
                     severity: warning
                     component: disk
@@ -271,7 +271,7 @@ groups:
                 execErrState: Error
                 for: 1m
                 annotations:
-                    description: 'Использование диска: {{ printf "%.2f" $values.A.value }}%'
+                    description: 'Использование диска больше 80%'
                 labels:
                     severity: critical
                     component: disk
