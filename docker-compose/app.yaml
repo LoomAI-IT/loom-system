@@ -4,6 +4,7 @@ networks:
         external: true  # Создается в docker-compose.db.yaml
 
 services:
+
     loom-tg-bot:
         build:
             context: "../../${LOOM_TG_BOT_CONTAINER_NAME}"
@@ -15,6 +16,21 @@ services:
             - "../env/.env.monitoring"
         ports:
             - "${LOOM_TG_BOT_PORT}:${LOOM_TG_BOT_PORT}"
+        restart: unless-stopped
+        networks:
+            - net
+
+    loom-brief-tg-bot:
+        build:
+            context: "../../${LOOM_BRIEF_TG_BOT_CONTAINER_NAME}"
+            dockerfile: "${LOOM_BRIEF_TG_BOT_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${LOOM_BRIEF_TG_BOT_CONTAINER_NAME}"
+        env_file:
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
+        ports:
+            - "${LOOM_BRIEF_TG_BOT_PORT}:${LOOM_BRIEF_TG_BOT_PORT}"
         restart: unless-stopped
         networks:
             - net

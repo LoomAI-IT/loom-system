@@ -42,6 +42,23 @@ services:
         networks:
             - net
 
+    loom-brief-tg-bot-postgres:
+        image: postgres:17.6
+        container_name: "${LOOM_BRIEF_TG_BOT_POSTGRES_CONTAINER_NAME}"
+        volumes:
+            - "../${LOOM_BRIEF_TG_BOT_POSTGRES_VOLUME_DIR}:/var/lib/postgresql/data"
+        ports:
+            - "${LOOM_BRIEF_TG_BOT_POSTGRES_PORT}:5432"
+        environment:
+            POSTGRES_DB: "${LOOM_BRIEF_TG_BOT_POSTGRES_DB_NAME}"
+            POSTGRES_USER: "${LOOM_BRIEF_TG_BOT_POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${LOOM_BRIEF_TG_BOT_POSTGRES_PASSWORD}"
+            PGDATA: /var/lib/postgresql/data/pgdata
+        logging: *default-logging
+        restart: unless-stopped
+        networks:
+            - net
+
     loom-account-postgres:
         image: postgres:17.6
         container_name: "${LOOM_ACCOUNT_POSTGRES_CONTAINER_NAME}"
