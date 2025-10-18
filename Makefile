@@ -18,6 +18,7 @@ deploy:
 	@apt install python3-pip git make
 	@pip install requests --break-system-packages
 	@cd ..
+	@git clone git@github.com:LoomAI-IT/loom-admin-panel.git
 	@git clone git@github.com:LoomAI-IT/loom-tg-bot.git
 	@git clone git@github.com:LoomAI-IT/loom-release-tg-bot.git
 	@git clone git@github.com:LoomAI-IT/loom-brief-tg-bot.git
