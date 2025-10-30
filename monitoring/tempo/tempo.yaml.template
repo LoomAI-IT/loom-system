@@ -22,6 +22,7 @@ compactor:
     compaction_window: 1h
     max_block_bytes: 100_000_000
     compacted_block_retention: 24h
+    block_retention: 168h
 
 metrics_generator:
   processor:
