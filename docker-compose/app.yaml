@@ -98,7 +98,7 @@ services:
     loom-internal-dashboard:
         build:
             context: "../../${LOOM_INTERNAL_DASHBOARD_CONTAINER_NAME}"
-            dockerfile: "${LOOM_INTERNAL_DASHBOARD_DOCKERFILE_DIR}/DockerfileHTTP"
+            dockerfile: "${LOOM_INTERNAL_DASHBOARD_DOCKERFILE_DIR}/Dockerfile"
         container_name: "${LOOM_INTERNAL_DASHBOARD_CONTAINER_NAME}"
         env_file:
             - "../env/.env.app"
