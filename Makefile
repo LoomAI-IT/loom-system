@@ -27,6 +27,7 @@ deploy:
 	@git clone git@github.com:LoomAI-IT/loom-employee.git
 	@git clone git@github.com:LoomAI-IT/loom-organization.git
 	@git clone git@github.com:LoomAI-IT/loom-content.git
+	@git clone git@github.com:LoomAI-IT/loom-internal-dashboard.git
 	@cd loom-system
 	@./infrastructure/nginx/install.sh
 	@./infrastructure/docker/install.sh
@@ -60,6 +61,7 @@ update-all:
 	@cd ../loom-employee/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-organization/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-content/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-internal-dashboard/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 
 rebuild-all: update-all build-all
 
