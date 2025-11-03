@@ -6,11 +6,11 @@ app = FastAPI()
 
 # Список доменов для рассылки
 DOMAINS = [
-    "https://loom-ai.ru.com",
-    "https://stage.loom-ai.ru.com",
-    "https://dev1.loom-ai.ru.com",
-    "https://dev2.loom-ai.ru.com",
-    "https://dev3.loom-ai.ru.com",
+    "https://loom-ai.ru",
+    "https://stage.loom-ai.ru",
+    "https://dev1.loom-ai.ru",
+    "https://dev2.loom-ai.ru",
+    "https://dev3.loom-ai.ru",
 ]
 
 ENDPOINT = "/api/content/video-cut/vizard/create"
