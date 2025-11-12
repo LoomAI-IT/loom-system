@@ -3,6 +3,8 @@
 .PHONY: rebuild-monitoring stop-monitoring
 .PHONY: rebuild-db stop-db
 .PHONY: set-env set-env-to-config-template
+.PHONY: backup backup-account backup-authorization backup-employee backup-organization backup-content backup-tg-bot
+.PHONY: list-backups restore install-backup-cron
 
 set-env:
 	@export $(cat env/.env.app env/.env.db env/.env.monitoring | xargs)
@@ -31,6 +33,7 @@ deploy:
 	@cd loom-system
 	@./infrastructure/nginx/install.sh
 	@./infrastructure/docker/install.sh
+	@mkdir -p backups/postgresql/{account,authorization,employee,organization,content,tg-bot} logs script/backup
 	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics,tg-bot-api}
 	@mkdir -p volumes/redis/monitoring
 	@mkdir -p volumes/weed
@@ -84,3 +87,51 @@ rebuild-monitoring: update-all set-env-to-config-template
 rebuild-db: update-all set-env-to-config-template
 	@docker compose -f ./docker-compose/db.yaml down
 	@docker compose -f ./docker-compose/db.yaml up -d --build
+
+# PostgreSQL Backup Commands
+
+backup:
+	@echo "Starting backup for all PostgreSQL instances..."
+	@./script/backup/pg_backup_all.sh
+
+backup-account:
+	@echo "Starting backup for account instance..."
+	@./script/backup/pg_backup.sh account
+
+backup-authorization:
+	@echo "Starting backup for authorization instance..."
+	@./script/backup/pg_backup.sh authorization
+
+backup-employee:
+	@echo "Starting backup for employee instance..."
+	@./script/backup/pg_backup.sh employee
+
+backup-organization:
+	@echo "Starting backup for organization instance..."
+	@./script/backup/pg_backup.sh organization
+
+backup-content:
+	@echo "Starting backup for content instance..."
+	@./script/backup/pg_backup.sh content
+
+backup-tg-bot:
+	@echo "Starting backup for tg-bot instance..."
+	@./script/backup/pg_backup.sh tg-bot
+
+list-backups:
+	@./script/backup/pg_list_backups.sh
+
+restore:
+	@if [ -z "$(INSTANCE)" ] || [ -z "$(BACKUP)" ]; then \
+		echo "Error: INSTANCE and BACKUP parameters are required"; \
+		echo "Usage: make restore INSTANCE=<instance> BACKUP=<path_to_backup>"; \
+		echo "Example: make restore INSTANCE=account BACKUP=backups/postgresql/account/account_backup_20250112_030000.tar.gz"; \
+		exit 1; \
+	fi
+	@echo "Starting restore for instance: $(INSTANCE)"
+	@echo "Backup file: $(BACKUP)"
+	@./script/backup/pg_restore.sh $(INSTANCE) $(BACKUP)
+
+install-backup-cron:
+	@echo "Installing cron job for automatic backups..."
+	@./script/backup/install_cron.sh
