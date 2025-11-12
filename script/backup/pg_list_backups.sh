@@ -147,18 +147,18 @@ for instance in "${INSTANCES[@]}"; do
         show_instance_backups "${instance}"
 
         # Подсчет статистики
-        local count=$(ls -1 "${instance_dir}"/${instance}_backup_*.tar.gz 2>/dev/null | wc -l)
+        count=$(ls -1 "${instance_dir}"/${instance}_backup_*.tar.gz 2>/dev/null | wc -l)
         TOTAL_BACKUPS=$((TOTAL_BACKUPS + count))
 
         for backup_file in "${instance_dir}"/${instance}_backup_*.tar.gz; do
             if [[ -f "${backup_file}" ]]; then
-                local size=$(stat -c%s "${backup_file}")
+                size=$(stat -c%s "${backup_file}")
                 TOTAL_SIZE=$((TOTAL_SIZE + size))
 
                 # Добавляем размер WAL если есть
-                local wal_file="${backup_file%.tar.gz}_wal.tar.gz"
+                wal_file="${backup_file%.tar.gz}_wal.tar.gz"
                 if [[ -f "${wal_file}" ]]; then
-                    local wal_size=$(stat -c%s "${wal_file}")
+                    wal_size=$(stat -c%s "${wal_file}")
                     TOTAL_SIZE=$((TOTAL_SIZE + wal_size))
                 fi
             fi
