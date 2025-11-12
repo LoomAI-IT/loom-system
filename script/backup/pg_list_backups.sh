@@ -150,7 +150,7 @@ for instance in "${INSTANCES[@]}"; do
         local count=$(ls -1 "${instance_dir}"/${instance}_backup_*.tar.gz 2>/dev/null | wc -l)
         TOTAL_BACKUPS=$((TOTAL_BACKUPS + count))
 
-        for backup_file in "${instance_dir}"/${instance}_backup_*.tar.gz 2>/dev/null; do
+        for backup_file in "${instance_dir}"/${instance}_backup_*.tar.gz; do
             if [[ -f "${backup_file}" ]]; then
                 local size=$(stat -c%s "${backup_file}")
                 TOTAL_SIZE=$((TOTAL_SIZE + size))
