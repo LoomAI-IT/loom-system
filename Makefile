@@ -21,6 +21,7 @@ deploy:
 	@pip install requests --break-system-packages
 	@cd ..
 	@git clone git@github.com:LoomAI-IT/loom-admin-panel.git
+	@git clone git@github.com:LoomAI-IT/loom-landing.git
 	@git clone git@github.com:LoomAI-IT/loom-tg-bot.git
 	@git clone git@github.com:LoomAI-IT/loom-release-tg-bot.git
 	@git clone git@github.com:LoomAI-IT/loom-brief-tg-bot.git
@@ -57,6 +58,7 @@ stop-all:
 update-all:
 	@git pull
 	@cd ../loom-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-landing/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-release-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-brief-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-account/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
