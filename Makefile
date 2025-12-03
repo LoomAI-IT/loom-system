@@ -24,7 +24,7 @@ deploy:
 	@git clone git@github.com:LoomAI-IT/loom-landing.git
 	@git clone git@github.com:LoomAI-IT/loom-tg-bot.git
 	@git clone git@github.com:LoomAI-IT/loom-release-tg-bot.git
-	@git clone git@github.com:LoomAI-IT/loom-brief-tg-bot.git
+	@git clone git@github.com:LoomAI-IT/loom-tg-custdev.git
 	@git clone git@github.com:LoomAI-IT/loom-account.git
 	@git clone git@github.com:LoomAI-IT/loom-authorization.git
 	@git clone git@github.com:LoomAI-IT/loom-employee.git
@@ -34,11 +34,11 @@ deploy:
 	@cd loom-system
 	@./infrastructure/nginx/install.sh
 	@./infrastructure/docker/install.sh
-	@mkdir -p backups/postgresql/{account,authorization,employee,organization,content,tg-bot} logs script/backup
+	@mkdir -p backups/postgresql/{account,authorization,employee,organization,content,tg-bot,tg-custdev} logs script/backup
 	@mkdir -p volumes/{grafana,loki,tempo,redis,postgresql,victoria-metrics,tg-bot-api}
 	@mkdir -p volumes/redis/monitoring
 	@mkdir -p volumes/weed
-	@mkdir -p volumes/postgresql/{tg-bot,release-tg-bot,brief-tg-bot,account,authorization,employee,organization,content,grafana}
+	@mkdir -p volumes/postgresql/{tg-bot,tg-custdev,release-tg-bot,account,authorization,employee,organization,content,grafana}
 	@chmod -R 777 volumes
 	@docker build -f script/migration/Dockerfile -t migration-base:latest .
 
@@ -60,7 +60,7 @@ update-all:
 	@cd ../loom-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-landing/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-release-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
-	@cd ../loom-brief-tg-bot/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
+	@cd ../loom-tg-custdev/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-account/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-authorization/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
 	@cd ../loom-employee/ && git fetch origin && git checkout main && git reset --hard origin/main && cd ../loom-system/
