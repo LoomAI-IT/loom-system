@@ -80,6 +80,22 @@ services:
         networks:
             - net
 
+    loom-tg-custdev:
+        build:
+            context: "../../${LOOM_TG_CUSTDEV_CONTAINER_NAME}"
+            dockerfile: "${LOOM_TG_CUSTDEV_DOCKERFILE_DIR}/Dockerfile"
+        container_name: "${LOOM_TG_CUSTDEV_CONTAINER_NAME}"
+        env_file:
+            - "../env/.env.app"
+            - "../env/.env.db"
+            - "../env/.env.monitoring"
+            - "../env/.env.runner"
+        ports:
+            - "${LOOM_TG_CUSTDEV_PORT}:${LOOM_CUSTDEV_TG_PORT}"
+        restart: unless-stopped
+        networks:
+            - net
+
     loom-content:
         build:
             context: "../../${LOOM_CONTENT_CONTAINER_NAME}"
