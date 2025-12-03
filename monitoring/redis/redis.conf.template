@@ -1,7 +1,7 @@
 protected-mode yes
 loglevel notice
 logfile ""
-databases 5
+databases 10
 
 # AOF настройки
 appendonly yes
