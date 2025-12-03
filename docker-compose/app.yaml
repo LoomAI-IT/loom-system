@@ -91,7 +91,7 @@ services:
             - "../env/.env.monitoring"
             - "../env/.env.runner"
         ports:
-            - "${LOOM_TG_CUSTDEV_PORT}:${LOOM_CUSTDEV_TG_PORT}"
+            - "${LOOM_TG_CUSTDEV_PORT}:${LOOM_TG_CUSTDEV_PORT}"
         restart: unless-stopped
         networks:
             - net
